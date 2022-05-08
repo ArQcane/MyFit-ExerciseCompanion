@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyFit - Exercise Companion</string>
+    <string name="are_you_a_new_user_register_with_us">Are you a new user? <font color='#95CD41'>Register with us!</font></string>
+    <string name="already_have_an_account_login_here">Already Have An Account?<font color='#95CD41'> Login Here</font></string>
 </resources>
