@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".ui.RegisterActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -88,6 +88,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
                 android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
                 android:hint="Email Address">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -109,6 +110,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
                 android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
                 android:hint="Password">
 
                 <com.google.android.material.textfield.TextInputEditText

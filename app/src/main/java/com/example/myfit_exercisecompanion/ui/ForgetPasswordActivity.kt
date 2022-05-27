@@ -1,4 +1,4 @@
-package com.example.myfit_exercisecompanion
+package com.example.myfit_exercisecompanion.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

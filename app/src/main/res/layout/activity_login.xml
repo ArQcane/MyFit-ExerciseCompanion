@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".ui.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -110,6 +110,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
                 android:layout_marginRight="10dp"
                 android:hint="Email">
 
@@ -118,6 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_person_24"
+                    android:textColor="@color/white"
                     android:backgroundTint="@color/colorPrimary"
                     android:drawableTint="@color/white"
                     android:drawablePadding="20dp"
@@ -132,6 +134,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
                 android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
                 android:hint="Password">
 
                 <com.google.android.material.textfield.TextInputEditText
