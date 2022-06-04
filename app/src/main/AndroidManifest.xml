@@ -14,7 +14,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.RegisterActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ui.LoginActivity"
             android:exported="true">
@@ -26,7 +26,12 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+        </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
     </application>
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
 </manifest>

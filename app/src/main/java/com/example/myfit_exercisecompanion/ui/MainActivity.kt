@@ -1,20 +1,18 @@
 package com.example.myfit_exercisecompanion.ui
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myfit_exercisecompanion.R
+import com.example.myfit_exercisecompanion.RunTrackerConfigs.MapPresenter
 import com.example.myfit_exercisecompanion.databinding.ActivityMainBinding
-import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
-
+    var presenter = MapPresenter(this)
     private lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +28,8 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment,R.id.runTrackerFragment,R.id.calorieCounterFragment,R.id.profileFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        presenter.onViewCreated()
 
 
 //        val userId = intent.getStringExtra("user_id")
