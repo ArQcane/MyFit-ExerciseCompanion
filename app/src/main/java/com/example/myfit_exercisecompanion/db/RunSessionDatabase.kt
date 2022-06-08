@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.myfit_exercisecompanion.models.RunSession
 
 @Database(entities = [RunSession::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class RunSessionDatabase : RoomDatabase() {
-    abstract fun runSessionDao(): RunSessionDAO
+    abstract fun getRunningSessionDao(): RunSessionDAO
 
     companion object {
         @Volatile

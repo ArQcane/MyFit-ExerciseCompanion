@@ -36,5 +36,14 @@ interface RunSessionDAO {
     @Query("SELECT SUM(timeInMilis) FROM runsession")
     fun getTotalTimeInMilis(): LiveData<Long>
 
+    @Query("SELECT SUM(caloriesBurnt) FROM runsession")
+    fun getTotalCaloriesBurnt(): LiveData<Int>
+
+    @Query("SELECT SUM(distanceInMeters) FROM runsession")
+    fun getTotalDistance(): LiveData<Int>
+
+    @Query("SELECT SUM(avgSpeedInKMH) FROM runsession")
+    fun getTotalAvgSpeed(): LiveData<Float>
+
 
 }
