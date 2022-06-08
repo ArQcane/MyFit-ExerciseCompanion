@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,6 +82,7 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker), OnMapReadyCa
         binding.container.txtTime.base = SystemClock.elapsedRealtime()
         binding.container.txtTime.start()
         map.clear()
+        Log.d("type:", "${binding.container.txtTime.base}")
 
         presenter?.startTracking()
     }
