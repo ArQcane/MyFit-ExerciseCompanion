@@ -10,7 +10,7 @@ interface RunSessionDAO {
     suspend fun insertRunSession(runSession: RunSession)
 
     @Delete
-    fun delete(runSession: RunSession)
+    suspend fun deleteRunSession(runSession: RunSession)
 
     @Query("SELECT * FROM runsession ORDER BY timestamp DESC")
     fun getAllRunSessionsSortedByDate(): LiveData<List<RunSession>>

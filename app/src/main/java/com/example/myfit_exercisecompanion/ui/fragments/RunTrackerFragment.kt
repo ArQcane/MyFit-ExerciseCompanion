@@ -9,18 +9,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.RunTrackerConfigs.MapPresenter
 import com.example.myfit_exercisecompanion.RunTrackerConfigs.Ui
 import com.example.myfit_exercisecompanion.databinding.FragmentRunTrackerBinding
 import com.example.myfit_exercisecompanion.ui.MainActivity
+import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker), OnMapReadyCallback {
     private var _presenter : MapPresenter? = null
     private lateinit var map: GoogleMap
@@ -29,6 +33,8 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker), OnMapReadyCa
 // onDestroyView.
     private val binding get() = _binding!!
     private val presenter get() = _presenter!!
+
+    private val viewModel: RunSessionViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

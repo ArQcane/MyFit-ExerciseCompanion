@@ -4,15 +4,22 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Toast
 import com.example.myfit_exercisecompanion.databinding.ActivityLoginBinding
+import com.example.myfit_exercisecompanion.db.RunSessionDAO
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
