@@ -21,6 +21,8 @@ class RunSessionRepository @Inject constructor(
 
     fun getAllRunSessionsSortedByCaloriesBurnt() = runSessionDAO.getAllRunSessionsSortedByCaloriesBurnt()
 
+    fun getAllRunSessionsSortedBySteps() = runSessionDAO.getAllRunSessionsSortedBySteps()
+
     fun getTotalAvgSpeed() = runSessionDAO.getTotalAvgSpeed()
 
     fun getTotalDistance() = runSessionDAO.getTotalDistance()
@@ -29,5 +31,5 @@ class RunSessionRepository @Inject constructor(
 
     fun getTotalTimeInMilis() = runSessionDAO.getTotalTimeInMilis()
 
-    // TODO: Need to Make a getTotalSteps fun and sort by steps fun
+    fun getTotalSteps() = runSessionDAO.getTotalSteps()
 }

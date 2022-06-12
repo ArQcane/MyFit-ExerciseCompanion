@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.firebase.installations.time.SystemClock
 import java.io.Serializable
 
 @Entity(tableName = "runsession")

@@ -27,6 +27,9 @@ interface RunSessionDAO {
     @Query("SELECT * FROM runsession ORDER BY distanceInMeters DESC")
     fun getAllRunSessionsSortedByDistance(): LiveData<List<RunSession>>
 
+    @Query("SELECT * FROM runsession ORDER BY stepsPerSession DESC")
+    fun getAllRunSessionsSortedBySteps(): LiveData<List<RunSession>>
+
     @Query("SELECT * FROM runsession")
     fun getAllRunSessions(): LiveData<List<RunSession>>
 
@@ -44,6 +47,9 @@ interface RunSessionDAO {
 
     @Query("SELECT SUM(avgSpeedInKMH) FROM runsession")
     fun getTotalAvgSpeed(): LiveData<Float>
+
+    @Query("SELECT SUM(stepsPerSession) FROM runsession")
+    fun getTotalSteps(): LiveData<Float>
 
 
 }

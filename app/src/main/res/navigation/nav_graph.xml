@@ -5,6 +5,10 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
+    <action android:id="@+id/action_global_trackingFragment"
+        app:destination="@+id/runTrackerFragment"
+        app:launchSingleTop="true"/>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.myfit_exercisecompanion.ui.fragments.HomeFragment"

@@ -1,8 +1,12 @@
 package com.example.myfit_exercisecompanion.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -10,21 +14,21 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.room.Dao
 import com.example.myfit_exercisecompanion.R
-import com.example.myfit_exercisecompanion.RunTrackerConfigs.MapPresenter
 import com.example.myfit_exercisecompanion.databinding.ActivityMainBinding
 import com.example.myfit_exercisecompanion.db.RunSessionDAO
+import com.example.myfit_exercisecompanion.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    var presenter = MapPresenter(this)
-
     private lateinit var binding : ActivityMainBinding
 
     @Inject
     lateinit var runSessionDao: RunSessionDAO
+
+    private lateinit var navController: NavController
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,31 +37,37 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        navigateToTrackingFragmentIfNeeded(intent)
 
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        val navController = navHostFragment.findNavController()
+        navController = findNavController(R.id.navHostFragment)
 
-        binding.bottomNavigationView.setupWithNavController(navController)
+        navigateToTrackingFragmentIfNeeded(intent)
 
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment,R.id.runTrackerFragment,R.id.calorieCounterFragment,R.id.profileFragment))
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        with(binding) {
+            bottomNavigationView.apply {
+                setupWithNavController(navController)
+                setOnNavigationItemReselectedListener { /* no-op */ }
+            }
+        }
 
-        presenter.onViewCreated()
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.bottomNavigationView.visibility = when (destination.id) {
+                R.id.homeFragment, R.id.runTrackerFragment, R.id.calorieCounterFragment, R.id.profileFragment -> View.VISIBLE
+                else -> View.GONE
+            }
+        }
 
+    }
 
-//        val userId = intent.getStringExtra("user_id")
-//        val emailId = intent.getStringExtra("email_id")
-//
-//        binding.tvUserId.text = "User ID :: $userId"
-//        binding.tvEmailId.text = "Email ID :: $emailId"
-//
-//        binding.btnLogout.setOnClickListener {
-//            FirebaseAuth.getInstance().signOut()
-//
-//            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-//            finish()
-//        }
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        navigateToTrackingFragmentIfNeeded(intent)
+    }
+
+    private fun navigateToTrackingFragmentIfNeeded(intent: Intent?){
+        if(intent?.action == ACTION_SHOW_TRACKING_FRAGMENT){
+            navController.navigate(R.id.action_global_trackingFragment)
+        }
     }
 }

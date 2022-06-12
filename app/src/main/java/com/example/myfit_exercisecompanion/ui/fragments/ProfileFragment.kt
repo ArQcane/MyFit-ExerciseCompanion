@@ -1,5 +1,6 @@
 package com.example.myfit_exercisecompanion.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,12 +8,48 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.myfit_exercisecompanion.R
+import com.example.myfit_exercisecompanion.databinding.FragmentHomeBinding
+import com.example.myfit_exercisecompanion.databinding.FragmentProfileBinding
+import com.example.myfit_exercisecompanion.ui.LoginActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.StatisticsViewModel
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
-    private val viewModel: StatisticsViewModel by viewModels()
 
+    private var _binding: FragmentProfileBinding? = null
+
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val userId = activity?.intent?.getStringExtra("user_id")
+        val emailId = activity?.intent?.getStringExtra("email_id")
+
+        binding.tvUserId2.text = "User ID :: $userId"
+        binding.tvEmailId2.text = "Email ID :: $emailId"
+
+        binding.btnLogout2.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+
+            startActivity(Intent(activity, LoginActivity::class.java))
+        }
+    }
 }
