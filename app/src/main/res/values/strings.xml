@@ -13,4 +13,11 @@
     <string name="start_label">Start</string>
     <string name="stop_label">Stop</string>
     <string name="distance_value">%d meters</string>
+    <string-array name="filter_options">
+        <item>Date</item>
+        <item>Running Time</item>
+        <item>Distance</item>
+        <item>Average Speed</item>
+        <item>Calories Burned</item>
+    </string-array>
 </resources>
