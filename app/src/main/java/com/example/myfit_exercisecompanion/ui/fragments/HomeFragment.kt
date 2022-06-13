@@ -46,6 +46,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requestPermissions()
     }
 
     private fun requestPermissions(){

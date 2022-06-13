@@ -20,7 +20,7 @@ import com.example.myfit_exercisecompanion.other.Constants.ACTION_START_OR_RESUM
 import com.example.myfit_exercisecompanion.other.Constants.MAP_ZOOM
 import com.example.myfit_exercisecompanion.other.Constants.POLYLINE_COLOR
 import com.example.myfit_exercisecompanion.other.Constants.POLYLINE_WIDTH
-import com.example.myfit_exercisecompanion.services.PolyLine
+import com.example.myfit_exercisecompanion.services.Polyline
 import com.example.myfit_exercisecompanion.services.TrackingService
 
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
@@ -37,7 +37,7 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
     private val viewModel: RunSessionViewModel by viewModels()
 
     private var isTracking = false
-    private var pathPoints = mutableListOf<PolyLine>()
+    private var pathPoints = mutableListOf<Polyline>()
 
     private var map: GoogleMap? = null
 
@@ -68,46 +68,48 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
         }
 
 
-        binding.mapView.getMapAsync{
+        binding.mapView.getMapAsync {
             map = it
             addAllPolylines()
         }
         subscribeToObservers()
     }
 
-    private fun subscribeToObservers(){
+    private fun subscribeToObservers() {
         TrackingService.isTracking.observe(viewLifecycleOwner, Observer {
             updateTracking(it)
         })
 
         TrackingService.pathPoints.observe(viewLifecycleOwner, Observer {
-            pathPoints= it
+            pathPoints = it
             addLatestPolyline()
             moveCameraToUser()
         })
     }
 
-    private fun toggleRun(){
-        if(isTracking){
+    private fun toggleRun() {
+        if (isTracking) {
             sendCommandToService(ACTION_PAUSE_SERVICE)
-        }else{
+        } else {
             sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
         }
     }
 
-    private fun updateTracking(isTracking: Boolean){
+    private fun updateTracking(isTracking: Boolean) {
         this.isTracking = isTracking
-        if(!isTracking){
-            binding.btnToggleRun.text = "Start"
-            binding.btnFinishRun.visibility = View.VISIBLE
-        } else{
-            binding.btnToggleRun.text = "Stop"
-            binding.btnFinishRun.visibility = View.GONE
+        binding.apply {
+            if (!isTracking) {
+                btnToggleRun.text = "Start"
+                btnFinishRun.visibility = View.VISIBLE
+            } else {
+                btnToggleRun.text = "Stop"
+                btnFinishRun.visibility = View.GONE
+            }
         }
     }
 
     private fun moveCameraToUser() {
-        if(pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty()){
+        if (pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty()) {
             map?.animateCamera(
                 CameraUpdateFactory.newLatLngZoom(
                     pathPoints.last().last(),
@@ -117,8 +119,8 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
         }
     }
 
-    private fun addAllPolylines(){
-        for(polyline in pathPoints){
+    private fun addAllPolylines() {
+        for (polyline in pathPoints) {
             val polylineOptions = PolylineOptions()
                 .color(POLYLINE_COLOR)
                 .width(POLYLINE_WIDTH)
@@ -127,16 +129,16 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
         }
     }
 
-    private fun addLatestPolyline(){
-        if(pathPoints.isNotEmpty() && pathPoints.last().size > 1){
-            val preLastLatLng = pathPoints.last()[pathPoints.last().size-2]
+    private fun addLatestPolyline() {
+        if (pathPoints.isNotEmpty() && pathPoints.last().size > 1) {
+            val preLastLatLng = pathPoints.last()[pathPoints.last().size - 2]
             val lastLatLng = pathPoints.last().last()
-            val polyLineOptions = PolylineOptions()
+            val polylineOptions = PolylineOptions()
                 .color(POLYLINE_COLOR)
                 .width(POLYLINE_WIDTH)
                 .add(preLastLatLng)
                 .add(lastLatLng)
-            map?.addPolyline(polyLineOptions)
+            map?.addPolyline(polylineOptions)
         }
     }
 
@@ -146,34 +148,33 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
             requireContext().startService(it)
         }
 
-
     override fun onResume() {
         super.onResume()
-        binding.mapView.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        binding.mapView.onPause()
+        binding.mapView?.onResume()
     }
 
     override fun onStart() {
         super.onStart()
-        binding.mapView.onStart()
+        binding.mapView?.onStart()
     }
 
     override fun onStop() {
         super.onStop()
-        binding.mapView.onStop()
+        binding.mapView?.onStop()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.mapView?.onPause()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        binding.mapView.onLowMemory()
+        binding.mapView?.onLowMemory()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        binding.mapView.onSaveInstanceState(outState)
+        binding.mapView?.onSaveInstanceState(outState)
     }
 }
