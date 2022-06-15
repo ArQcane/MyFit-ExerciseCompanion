@@ -58,6 +58,8 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
 
     private var liveCaloriesBurnt = 0
 
+    private var liveStepsCounted = -1
+
     private var weight = 80f
 
     private var menu: Menu? = null
@@ -119,17 +121,21 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
 
         TrackingService.timeRunInMilis.observe(viewLifecycleOwner, Observer {
             curTimeInMilis = it
-            val formattedTime = TrackingUtility.getFormattedStopwatchTime(curTimeInMilis, true)
-            binding.tvTimer.text = formattedTime
+            val formattedTime = TrackingUtility.getFormattedStopwatchTime(curTimeInMilis)
+            binding.container.tvTimer.text = formattedTime
         })
         TrackingService.liveDistance.observe(viewLifecycleOwner, Observer {
             liveDistance = it
             val formattedDistance = TrackingUtility.getFormattedLiveDistance(liveDistance)
-            binding.tvDistanceTravelled.text = formattedDistance
+            binding.container.tvDistanceTravelled.text = formattedDistance
         })
         TrackingService.liveCaloriesBurnt.observe(viewLifecycleOwner, Observer {
             liveCaloriesBurnt = it
-            binding.tvCaloriesBurnt.text = "${liveCaloriesBurnt}Kcal"
+            binding.container.tvCaloriesBurnt.text = "${liveCaloriesBurnt}Kcal"
+        })
+        TrackingService.liveSteps.observe(viewLifecycleOwner, Observer {
+            liveStepsCounted = it
+            binding.container.tvStepsTravelled.text = "${liveStepsCounted} Steps"
         })
     }
 
@@ -237,7 +243,7 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
             val averageSpeed = round((distanceInMeters / 1000f) / (curTimeInMilis / 1000f / 60 / 60) * 10) / 10f
             val dateTimeStamp = Calendar.getInstance().timeInMillis
             val caloriesBurned = ((distanceInMeters / 1000f) * weight).toInt()
-            val runSession = RunSession(bmp, dateTimeStamp, averageSpeed, distanceInMeters, curTimeInMilis, caloriesBurned)
+            val runSession = RunSession(bmp, dateTimeStamp, averageSpeed, distanceInMeters, curTimeInMilis, caloriesBurned, liveStepsCounted)
             viewModel.insertRunSession(runSession)
             Snackbar.make(
                 requireView().rootView,

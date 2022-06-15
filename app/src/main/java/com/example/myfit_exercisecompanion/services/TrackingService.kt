@@ -5,9 +5,15 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_MUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.hardware.SensorManager.SENSOR_DELAY_FASTEST
 import android.location.Location
 import android.os.Build
 import android.os.Looper
@@ -50,7 +56,7 @@ typealias Polylines = MutableList<Polyline>
 
 
 @AndroidEntryPoint
-class TrackingService : LifecycleService() {
+class TrackingService : LifecycleService(), SensorEventListener {
 
     var isFirstRun = true
 
@@ -67,12 +73,23 @@ class TrackingService : LifecycleService() {
 
     lateinit var currentNotificationBuilder : NotificationCompat.Builder
 
+    private val sensorManager by lazy {
+        this.getSystemService(SENSOR_SERVICE) as SensorManager
+    }
+
+    private val stepCounterSensor: Sensor? by lazy {
+        sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+    }
+
+    private var initialSteps = -1
+
     companion object {
         val timeRunInMilis = MutableLiveData<Long>()
         val isTracking = MutableLiveData<Boolean>()
         val pathPoints = MutableLiveData<Polylines>()
         val liveDistance = MutableLiveData<Float>()
         val liveCaloriesBurnt = MutableLiveData<Int>()
+        val liveSteps = MutableLiveData<Int>()
     }
 
     private fun postInitialValues() {
@@ -82,8 +99,10 @@ class TrackingService : LifecycleService() {
         timeRunInMilis.postValue(0L)
         liveDistance.postValue(0F)
         liveCaloriesBurnt.postValue(0)
+        liveSteps.postValue(0)
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate() {
         super.onCreate()
         currentNotificationBuilder = baseNotificationBuilder
@@ -111,6 +130,7 @@ class TrackingService : LifecycleService() {
                 ACTION_START_OR_RESUME_SERVICE -> {
                     if(isFirstRun) {
                         startForegroundService()
+                        setupStepCounter()
                         isFirstRun = false
                     } else {
                         Timber.d("Resuming service...")
@@ -124,6 +144,7 @@ class TrackingService : LifecycleService() {
                 ACTION_STOP_SERVICE -> {
                     Timber.d("Stopped service")
                     killService()
+                    unloadStepCounter()
                 }
             }
         }
@@ -163,18 +184,19 @@ class TrackingService : LifecycleService() {
         isTimerEnabled = false
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun updateNotificationTrackingState(isTracking: Boolean){
         val notificationActionText = if(isTracking) "Pause" else "Resume"
         val pendingIntent = if(isTracking) {
             val pauseIntent = Intent(this, TrackingService::class.java).apply {
                 action = ACTION_PAUSE_SERVICE
             }
-            PendingIntent.getService(this, 1, pauseIntent, FLAG_UPDATE_CURRENT)
+            PendingIntent.getService(this, 1, pauseIntent, FLAG_MUTABLE)
         } else {
             val resumeIntent = Intent(this, TrackingService::class.java).apply {
                 action = ACTION_START_OR_RESUME_SERVICE
             }
-            PendingIntent.getService(this, 2, resumeIntent, FLAG_UPDATE_CURRENT)
+            PendingIntent.getService(this, 2, resumeIntent, FLAG_MUTABLE)
         }
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -225,10 +247,10 @@ class TrackingService : LifecycleService() {
                         addPathPoint(location)
                         Timber.d("NEW LOCATION: ${location.latitude}, ${location.longitude}")
                         locationsList.add(location)
-                        calculateDistanceBetweenPathPoints(locationsList)
-                        getLiveCaloriesBurnt(liveDistance)
                     }
                 }
+                calculateDistanceBetweenPathPoints(locationsList)
+                getLiveCaloriesBurnt(liveDistance)
             }
         }
     }
@@ -290,6 +312,8 @@ class TrackingService : LifecycleService() {
         }
         startForeground(NOTIFICATION_ID, baseNotificationBuilder.build())
 
+        setupStepCounter()
+
         timeRunInSeconds.observe(this, Observer { timeRunInSeconds ->
             liveDistance.observe(this, Observer { liveDistance ->
                 if(!serviceKilled){
@@ -310,4 +334,33 @@ class TrackingService : LifecycleService() {
         )
         notificationManager.createNotificationChannel(channel)
     }
+
+    fun setupStepCounter() {
+        if (stepCounterSensor != null) {
+            sensorManager.registerListener(this, stepCounterSensor, SENSOR_DELAY_FASTEST)
+        }
+    }
+
+    override fun onSensorChanged(event: SensorEvent) {
+        if(isTracking.value!!){
+            event.values.firstOrNull()?.toInt()?.let { newSteps ->
+                if (initialSteps == -1) {
+                    initialSteps = newSteps
+                }
+
+                val currentSteps = newSteps - initialSteps
+
+                liveSteps.postValue(currentSteps)
+                Timber.d("currentSteps = ${currentSteps}")
+            }
+        }
+    }
+
+    fun unloadStepCounter() {
+        if (stepCounterSensor != null) {
+            sensorManager.unregisterListener(this)
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) = Unit
 }

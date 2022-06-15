@@ -68,8 +68,10 @@
       android:contentDescription="@string/distance_label"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="@+id/imgTime"
+      app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="@+id/imgTime"
       app:layout_constraintTop_toBottomOf="@+id/imgTime"
+      app:layout_constraintVertical_bias="0.048"
       app:srcCompat="@drawable/ic_distance" />
 
   <TextView
@@ -88,7 +90,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
       android:fontFamily="sans-serif-smallcaps"
-      android:text="@string/average_pace_label"
+      android:text="Calories Burnt"
       app:layout_constraintBottom_toBottomOf="@+id/imgPace"
       app:layout_constraintStart_toEndOf="@+id/imgPace"
       app:layout_constraintTop_toTopOf="@+id/imgPace" />
@@ -103,42 +105,72 @@
       app:layout_constraintStart_toStartOf="@+id/txtTimeLabel"
       app:layout_constraintTop_toTopOf="@+id/imgDistance" />
 
-  <TextView
-      android:id="@+id/txtPace"
+  <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/tvCaloriesBurnt"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:fontFamily="monospace"
-      tools:text="3.4 m/s"
+      android:text="0KCAL"
       app:layout_constraintBottom_toBottomOf="@+id/txtPaceLabel"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="1.0"
       app:layout_constraintStart_toEndOf="@+id/txtPaceLabel"
       app:layout_constraintTop_toTopOf="@+id/txtPaceLabel" />
 
-  <Chronometer
-      android:id="@+id/txtTime"
+  <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/tvTimer"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:fontFamily="monospace"
-      tools:text="45 minutes"
-      app:layout_constraintBottom_toBottomOf="@+id/txtTimeLabel"
-      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginStart="188dp"
+      android:text="00:00:00"
+      app:layout_constraintEnd_toEndOf="@+id/tvCaloriesBurnt"
       app:layout_constraintHorizontal_bias="1.0"
       app:layout_constraintStart_toEndOf="@+id/txtTimeLabel"
       app:layout_constraintTop_toTopOf="@+id/txtTimeLabel" />
 
-  <TextView
-      android:id="@+id/txtDistance"
+  <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/tvDistanceTravelled"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:fontFamily="monospace"
-      tools:text="12 km"
+      android:text="0.00KM"
       app:layout_constraintBottom_toBottomOf="@+id/txtDistanceLabel"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="1.0"
       app:layout_constraintStart_toEndOf="@+id/txtDistanceLabel"
       app:layout_constraintTop_toTopOf="@+id/txtDistanceLabel" />
+
+
+  <ImageView
+      android:id="@+id/imageView3"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      app:layout_constraintEnd_toEndOf="@+id/imgDistance"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="@+id/imgDistance"
+      app:layout_constraintTop_toBottomOf="@+id/imgDistance"
+      app:srcCompat="@drawable/ic_baseline_step_24" />
+
+  <TextView
+      android:id="@+id/tvStepsLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:fontFamily="sans-serif-smallcaps"
+      android:text="Steps"
+      app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+      app:layout_constraintStart_toEndOf="@+id/imageView3"
+      app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+  <TextView
+      android:id="@+id/tvStepsTravelled"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="0 Steps"
+      app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+      app:layout_constraintEnd_toEndOf="@+id/tvDistanceTravelled"
+      app:layout_constraintHorizontal_bias="1.0"
+      app:layout_constraintStart_toEndOf="@+id/imageView3"
+      app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

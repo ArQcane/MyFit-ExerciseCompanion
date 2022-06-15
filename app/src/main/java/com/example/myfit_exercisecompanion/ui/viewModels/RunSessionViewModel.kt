@@ -66,6 +66,4 @@ class RunSessionViewModel @Inject constructor(
     fun insertRunSession(runSession: RunSession) = viewModelScope.launch {
         runSessionRepository.insertRunSession(runSession)
     }
-
-
 }

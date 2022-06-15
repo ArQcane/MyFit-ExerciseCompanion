@@ -3,6 +3,8 @@ package com.example.myfit_exercisecompanion.di
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.other.Constants
@@ -27,6 +29,7 @@ object ServiceModule {
         @ApplicationContext
         app: Context) = FusedLocationProviderClient(app)
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @ServiceScoped
     @Provides
     fun provideMainActivityPendingIntent(
@@ -38,7 +41,7 @@ object ServiceModule {
         Intent(app, MainActivity::class.java).also {
             it.action = Constants.ACTION_SHOW_TRACKING_FRAGMENT
         },
-        PendingIntent.FLAG_UPDATE_CURRENT
+        PendingIntent.FLAG_MUTABLE
     )
 
     @ServiceScoped
@@ -54,4 +57,6 @@ object ServiceModule {
         .setContentTitle("Running App")
         .setContentText("00:00:00")
         .setContentIntent(pendingIntent)
+
+
 }

@@ -60,6 +60,9 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
 
                 val caloriesBurned = "${runSession.caloriesBurnt}kcal"
                 binding.tvCalories.text = caloriesBurned
+
+                val stepsTaken = "${runSession.stepsPerSession} steps"
+                binding.tvSteps.text = stepsTaken
             }
         }
     }

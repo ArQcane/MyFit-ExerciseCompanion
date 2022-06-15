@@ -24,7 +24,8 @@ object TrackingUtility {
                 context,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                Manifest.permission.ACTIVITY_RECOGNITION
             )
         }
 
@@ -47,24 +48,17 @@ object TrackingUtility {
         return distance
     }
 
-    fun getFormattedStopwatchTime(ms: Long, includeMillis: Boolean = false): String {
+    fun getFormattedStopwatchTime(ms: Long): String {
         var _ms = ms
         val hours = TimeUnit.MILLISECONDS.toHours(_ms)
         _ms -= TimeUnit.HOURS.toMillis(hours)
         val minutes = TimeUnit.MILLISECONDS.toMinutes(_ms)
         _ms -= TimeUnit.MINUTES.toMillis(minutes)
         val seconds = TimeUnit.MILLISECONDS.toSeconds(_ms)
-        if (!includeMillis) {
-            return "${if (hours < 10) "0" else ""}$hours:" +
-                    "${if (minutes < 10) "0" else ""}$minutes:" +
-                    "${if(seconds < 10) "0" else ""}$seconds"
-        }
-        _ms -= TimeUnit.SECONDS.toMillis(seconds)
-        _ms /= 10
         return "${if (hours < 10) "0" else ""}$hours:" +
                 "${if (minutes < 10) "0" else ""}$minutes:" +
-                "${if(seconds < 10) "0" else ""}$seconds:" +
-                "${if(_ms < 10) "0" else ""}$_ms"
+                "${if(seconds < 10) "0" else ""}$seconds"
+
     }
 
     fun getFormattedLiveDistance(km: Float) : String{
