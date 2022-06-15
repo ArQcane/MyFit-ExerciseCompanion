@@ -14,5 +14,6 @@
     <color name="colorDarkGreen">#2DB82D</color>
     <color name="colorDarkRed">#B12341</color>
     <color name="colorYellow">#24B8DE</color>
+    <color name="colorAccent">#FFE600</color>
     
 </resources>
