@@ -5,7 +5,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--    Run tracker Strings used-->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyC1p6RdVpqRYN4aiHsf240BAkQrSyOZXJ8</string>
+    <string name="google_maps_key">AIzaSyDzMNXkQ3CUt7yqy0HbVt685r9YhxGRFEM</string>
     <string name="title_activity_maps">Map</string>
     <string name="average_pace_label">Steps</string>
     <string name="elapsed_time_label">Elapsed time</string>
@@ -13,4 +13,11 @@
     <string name="start_label">Start</string>
     <string name="stop_label">Stop</string>
     <string name="distance_value">%d meters</string>
+    <string-array name="filter_options">
+        <item>Date</item>
+        <item>Running Time</item>
+        <item>Distance</item>
+        <item>Average Speed</item>
+        <item>Calories Burned</item>
+    </string-array>
 </resources>

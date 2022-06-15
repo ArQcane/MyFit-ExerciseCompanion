@@ -5,6 +5,10 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
+    <action android:id="@+id/action_global_trackingFragment"
+        app:destination="@+id/runTrackerFragment"
+        app:launchSingleTop="true"/>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.myfit_exercisecompanion.ui.fragments.HomeFragment"
@@ -22,6 +26,9 @@
         <action
             android:id="@+id/action_runTrackerFragment_to_calorieCounterFragment"
             app:destination="@id/calorieCounterFragment" />
+        <action
+            android:id="@+id/action_runTrackerFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/calorieCounterFragment"
@@ -31,10 +38,17 @@
         <action
             android:id="@+id/action_calorieCounterFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_calorieCounterFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.myfit_exercisecompanion.ui.fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

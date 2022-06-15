@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -56,17 +57,14 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     //Run Tracker Dependencies
+    // Google Maps Location Services
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
-    implementation 'com.google.android.gms:play-services-location:19.0.1'
-    implementation 'com.google.maps.android:android-maps-utils:2.2.3'
-    implementation 'com.google.maps.android:maps-utils-ktx:3.2.0'
 
     //Room Database
+    implementation "androidx.room:room-ktx:2.4.2"
     implementation "androidx.room:room-runtime:2.4.2"
-    annotationProcessor "androidx.room:room-compiler:2.4.2"
-
-    // Architectural Components
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
+    kapt "androidx.room:room-compiler:2.4.2"
 
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
@@ -80,6 +78,17 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.13.1'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
+    // Dagger Core
+    implementation "com.google.dagger:dagger:2.42"
+    kapt "com.google.dagger:dagger-compiler:2.42"
+
+    // Activity KTX for viewModels()
+    implementation "androidx.activity:activity-ktx:1.4.0"
+
+    //Dagger - Hilt
+    implementation "com.google.dagger:hilt-android:2.42"
+    kapt "com.google.dagger:hilt-android-compiler:2.42"
+
     // Easy Permissions
     implementation 'pub.devrel:easypermissions:3.0.0'
 
@@ -90,4 +99,5 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
+
 }
