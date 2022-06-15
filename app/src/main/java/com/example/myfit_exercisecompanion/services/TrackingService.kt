@@ -14,6 +14,7 @@ import android.os.Looper
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.myfit_exercisecompanion.R
@@ -204,18 +205,66 @@ class TrackingService : LifecycleService() {
             fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         }
     }
+    private val locationsList = mutableListOf<Location>()
+    private var distance = 0f
+
+    val liveLocations = MutableLiveData<List<LatLng>>()
+    var liveDistance = MutableLiveData<Int>()
+    val liveLocation = MutableLiveData<LatLng>()
+//
+//    private val locationCallback = object : LocationCallback() {
+//        override fun onLocationResult(result: LocationResult) {
+//            val currentLocation = result.lastLocation
+//            val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
+//
+//            val lastLocation = locations.lastOrNull()
+//
+//            if (lastLocation != null) {
+//                distance += SphericalUtil.computeDistanceBetween(lastLocation, latLng).roundToInt()
+//                liveDistance.value = distance
+//            }
+//
+//            locations.add(latLng)
+//            liveLocations.value = locations
+//        }
+//    }
+
+
 
     val locationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
             if(isTracking.value!!) {
-                result?.locations?.let { locations ->
+                result?.locations.let { locations ->
                     for(location in locations) {
                         addPathPoint(location)
                         Timber.d("NEW LOCATION: ${location.latitude}, ${location.longitude}")
+                        locationsList.add(location)
+                        Timber.d("${calculateDistanceBetweenPathPoints(locationsList)}")
                     }
                 }
             }
+        }
+    }
+
+    private fun calculateDistanceBetweenPathPoints(locationsList: MutableList<Location>){
+        val lastLocation = locationsList.getOrNull(locationsList.lastIndex)
+        val secondLastLocation = locationsList.getOrNull(locationsList.lastIndex - 1)
+        val results = FloatArray(1)
+        if(locationsList.size > 1){
+            Location.distanceBetween(
+                lastLocation!!.latitude,
+                lastLocation.longitude,
+                secondLastLocation!!.latitude ,
+                secondLastLocation.longitude,
+                results
+            )
+            distance += results[0]
+
+            Timber.d("Distance: $distance")
+            liveDistance = distance.toInt()
+        } else{
+            Timber.d("waiting for list to lengthen")
         }
     }
 
