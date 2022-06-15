@@ -66,4 +66,8 @@ object TrackingUtility {
                 "${if(seconds < 10) "0" else ""}$seconds:" +
                 "${if(_ms < 10) "0" else ""}$_ms"
     }
+
+    fun getFormattedLiveDistance(km: Float) : String{
+        return "${km}km"
+    }
 }

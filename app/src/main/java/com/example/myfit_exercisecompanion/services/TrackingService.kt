@@ -43,6 +43,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.math.round
 
 typealias Polyline = MutableList<LatLng>
 typealias Polylines = MutableList<Polyline>
@@ -70,6 +71,8 @@ class TrackingService : LifecycleService() {
         val timeRunInMilis = MutableLiveData<Long>()
         val isTracking = MutableLiveData<Boolean>()
         val pathPoints = MutableLiveData<Polylines>()
+        val liveDistance = MutableLiveData<Float>()
+        val liveCaloriesBurnt = MutableLiveData<Int>()
     }
 
     private fun postInitialValues() {
@@ -77,6 +80,8 @@ class TrackingService : LifecycleService() {
         pathPoints.postValue(mutableListOf())
         timeRunInSeconds.postValue(0L)
         timeRunInMilis.postValue(0L)
+        liveDistance.postValue(0F)
+        liveCaloriesBurnt.postValue(0)
     }
 
     override fun onCreate() {
@@ -207,27 +212,7 @@ class TrackingService : LifecycleService() {
     }
     private val locationsList = mutableListOf<Location>()
     private var distance = 0f
-
-    val liveLocations = MutableLiveData<List<LatLng>>()
-    var liveDistance = MutableLiveData<Int>()
-    val liveLocation = MutableLiveData<LatLng>()
-//
-//    private val locationCallback = object : LocationCallback() {
-//        override fun onLocationResult(result: LocationResult) {
-//            val currentLocation = result.lastLocation
-//            val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
-//
-//            val lastLocation = locations.lastOrNull()
-//
-//            if (lastLocation != null) {
-//                distance += SphericalUtil.computeDistanceBetween(lastLocation, latLng).roundToInt()
-//                liveDistance.value = distance
-//            }
-//
-//            locations.add(latLng)
-//            liveLocations.value = locations
-//        }
-//    }
+    private var caloriesBurnt = 0
 
 
 
@@ -240,7 +225,8 @@ class TrackingService : LifecycleService() {
                         addPathPoint(location)
                         Timber.d("NEW LOCATION: ${location.latitude}, ${location.longitude}")
                         locationsList.add(location)
-                        Timber.d("${calculateDistanceBetweenPathPoints(locationsList)}")
+                        calculateDistanceBetweenPathPoints(locationsList)
+                        getLiveCaloriesBurnt(liveDistance)
                     }
                 }
             }
@@ -260,11 +246,20 @@ class TrackingService : LifecycleService() {
                 results
             )
             distance += results[0]
-
-            Timber.d("Distance: $distance")
-            liveDistance = distance.toInt()
+            liveDistance.postValue(round(distance)/1000)
+            Timber.d("New Live Distance = ${liveDistance.value}")
         } else{
             Timber.d("waiting for list to lengthen")
+        }
+    }
+//    val caloriesBurned = ((distanceInMeters / 1000f) * weight).toInt()
+    private var weight = 80f
+
+
+    private fun getLiveCaloriesBurnt(liveDistance : MutableLiveData<Float>){
+        if(liveDistance.value!! >= 0){
+            caloriesBurnt = liveDistance.value?.times(weight)?.toInt()!!
+            liveCaloriesBurnt.postValue(caloriesBurnt)
         }
     }
 
@@ -295,12 +290,14 @@ class TrackingService : LifecycleService() {
         }
         startForeground(NOTIFICATION_ID, baseNotificationBuilder.build())
 
-        timeRunInSeconds.observe(this, Observer {
-            if(!serviceKilled){
-                val notification = currentNotificationBuilder
-                    .setContentText(TrackingUtility.getFormattedStopwatchTime(it * 1000L))
-                notificationManager.notify(NOTIFICATION_ID, notification.build())
-            }
+        timeRunInSeconds.observe(this, Observer { timeRunInSeconds ->
+            liveDistance.observe(this, Observer { liveDistance ->
+                if(!serviceKilled){
+                    val notification = currentNotificationBuilder
+                        .setContentText(TrackingUtility.getFormattedStopwatchTime(timeRunInSeconds * 1000L) + " | " + TrackingUtility.getFormattedLiveDistance(liveDistance))
+                    notificationManager.notify(NOTIFICATION_ID, notification.build())
+                }
+            })
         })
     }
 

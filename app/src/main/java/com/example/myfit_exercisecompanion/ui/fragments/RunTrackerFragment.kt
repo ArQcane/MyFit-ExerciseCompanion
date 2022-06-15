@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.myfit_exercisecompanion.R
@@ -52,6 +53,10 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
     private var map: GoogleMap? = null
 
     private var curTimeInMilis = 0L
+
+    private var liveDistance = 0f
+
+    private var liveCaloriesBurnt = 0
 
     private var weight = 80f
 
@@ -116,6 +121,15 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
             curTimeInMilis = it
             val formattedTime = TrackingUtility.getFormattedStopwatchTime(curTimeInMilis, true)
             binding.tvTimer.text = formattedTime
+        })
+        TrackingService.liveDistance.observe(viewLifecycleOwner, Observer {
+            liveDistance = it
+            val formattedDistance = TrackingUtility.getFormattedLiveDistance(liveDistance)
+            binding.tvDistanceTravelled.text = formattedDistance
+        })
+        TrackingService.liveCaloriesBurnt.observe(viewLifecycleOwner, Observer {
+            liveCaloriesBurnt = it
+            binding.tvCaloriesBurnt.text = "${liveCaloriesBurnt}Kcal"
         })
     }
 
