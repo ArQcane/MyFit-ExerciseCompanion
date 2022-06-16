@@ -89,7 +89,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 val allAvgSpeeds = it.indices.map { i -> BarEntry(i.toFloat(), it[i].avgSpeedInKMH) }
                 val barDataSet = BarDataSet(allAvgSpeeds, "Avg Speed Over Time").apply {
                     valueTextColor = Color.GREEN
-                    color = ContextCompat.getColor(requireContext(), R.color.colorAccent)
+                    color = ContextCompat.getColor(requireContext(), R.color.colorDarkGreen)
                 }
                 binding.barChart.data = BarData(barDataSet)
                 binding.barChart.marker = CustomMarkerView(it.reversed(), requireContext(), R.layout.marker_view)
@@ -113,13 +113,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             setDrawGridLines(true)
         }
         binding.barChart.axisLeft.apply {
-            axisLineColor = Color.GREEN
-            textColor = Color.GREEN
+            axisLineColor = Color.DKGRAY
+            textColor = Color.DKGRAY
             setDrawGridLines(true)
         }
         binding.barChart.axisRight.apply {
-            axisLineColor = Color.GREEN
-            textColor = Color.GREEN
+            axisLineColor = Color.DKGRAY
+            textColor = Color.DKGRAY
             setDrawGridLines(true)
         }
         binding.barChart.apply {
