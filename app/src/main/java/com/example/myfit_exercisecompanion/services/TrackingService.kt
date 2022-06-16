@@ -316,11 +316,13 @@ class TrackingService : LifecycleService(), SensorEventListener {
 
         timeRunInSeconds.observe(this, Observer { timeRunInSeconds ->
             liveDistance.observe(this, Observer { liveDistance ->
-                if(!serviceKilled){
-                    val notification = currentNotificationBuilder
-                        .setContentText(TrackingUtility.getFormattedStopwatchTime(timeRunInSeconds * 1000L) + " | " + TrackingUtility.getFormattedLiveDistance(liveDistance))
-                    notificationManager.notify(NOTIFICATION_ID, notification.build())
-                }
+                liveCaloriesBurnt.observe(this, Observer { liveCalories ->
+                    if(!serviceKilled){
+                        val notification = currentNotificationBuilder
+                            .setContentText(TrackingUtility.getFormattedStopwatchTime(timeRunInSeconds * 1000L) + " | " + TrackingUtility.getFormattedLiveDistance(liveDistance) + " | ${liveCalories}Kcal" )
+                        notificationManager.notify(NOTIFICATION_ID, notification.build())
+                    }
+                })
             })
         })
     }
