@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_runTrackerFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_runTrackerFragment_to_addNewRunSessionFragment"
+            app:destination="@id/addNewRunSessionFragment" />
     </fragment>
     <fragment
         android:id="@+id/calorieCounterFragment"
@@ -49,6 +52,39 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewRunSessionFragment"
+        android:name="com.example.myfit_exercisecompanion.ui.fragments.AddNewRunSessionFragment"
+        android:label="fragment_add_new_run_session"
+        tools:layout="@layout/fragment_add_new_run_session" >
+        <action
+            android:id="@+id/action_addNewRunSessionFragment_to_runTrackerFragment"
+            app:destination="@id/runTrackerFragment" />
+
+        <argument
+            android:name="mapScreenShot"
+            app:argType="android.graphics.Bitmap"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="timeTaken"
+            app:argType="long" />
+        <argument
+            android:name="distance"
+            app:argType="integer" />
+        <argument
+            android:name="averageSpeed"
+            app:argType="float" />
+        <argument
+            android:name="caloriesBurnt"
+            app:argType="integer" />
+        <argument
+            android:name="stepsCounted"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_addNewRunSessionFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

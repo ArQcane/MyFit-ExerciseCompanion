@@ -33,6 +33,8 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
 
     fun submitList(list: List<RunSession>) = differ.submitList(list)
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunSessionViewHolder {
         val binding = ItemRunSessionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RunSessionViewHolder(binding)
@@ -42,27 +44,34 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
         val runSession = differ.currentList[position]
         with(holder){
             holder.itemView.apply {
-                Glide.with(this).load(runSession.img).into(binding.ivRunImage)
+                Glide.with(this).load(runSession.img).into(binding.ivMapImage)
 
                 val calendar = Calendar.getInstance().apply {
                     timeInMillis = runSession.timestamp
                 }
                 val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
-                binding.tvDate.text = dateFormat.format(calendar.time)
+                binding.tvDate.text = "Posted on: ${dateFormat.format(calendar.time)}"
 
-                val avgSpeed = "${runSession.avgSpeedInKMH}km/h"
-                binding.tvAvgSpeed.text = avgSpeed
+                val avgSpeed = "Pace: ${runSession.avgSpeedInKMH}km/h"
+                binding.tvAverageSpeed.text = avgSpeed
 
-                val distanceInKm = "${runSession.distanceInMeters / 1000f}km"
+                val distanceInKm = "Distance Travelled: ${runSession.distanceInMeters / 1000f}km"
                 binding.tvDistance.text = distanceInKm
 
-                binding.tvTime.text = TrackingUtility.getFormattedStopwatchTime(runSession.timeInMilis)
+                binding.tvTimeTaken.text = "Time: ${TrackingUtility.getFormattedStopwatchTime(runSession.timeInMilis)}"
 
-                val caloriesBurned = "${runSession.caloriesBurnt}kcal"
-                binding.tvCalories.text = caloriesBurned
+                val caloriesBurned = "Calories Burned: ${runSession.caloriesBurnt}kcal"
+                binding.tvCaloriesBurned.text = caloriesBurned
 
                 val stepsTaken = "${runSession.stepsPerSession} steps"
-                binding.tvSteps.text = stepsTaken
+                binding.tvStepsTaken.text = stepsTaken
+
+                val title = "${runSession.runSessionTitle}"
+                binding.tvRunTitle.text = title
+
+                binding.btnEditRun.setOnClickListener {
+                    editRun()
+                }
             }
         }
     }

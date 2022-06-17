@@ -20,6 +20,7 @@ class RunSessionViewModel @Inject constructor(
     private val runsSortedByCaloriesBurnt = runSessionRepository.getAllRunSessionsSortedByCaloriesBurnt()
     private val runsSortedByTimeInMilis = runSessionRepository.getAllRunSessionsSortedByTimeInMilis()
     private val runsSortedByAverageSpeed = runSessionRepository.getAllRunSessionsSortedByAvgSpeed()
+    private val runsSortedByStepsTaken = runSessionRepository.getAllRunSessionsSortedBySteps()
 
     val runs = MediatorLiveData<List<RunSession>>()
 
@@ -51,6 +52,11 @@ class RunSessionViewModel @Inject constructor(
                 result?.let { runs.value = it }
             }
         }
+        runs.addSource(runsSortedByStepsTaken){ result->
+            if(sortTypes == SortTypes.STEPS_TAKEN){
+                result?.let { runs.value = it }
+            }
+        }
     }
 
     fun sortRuns(sortTypes: SortTypes) = when(sortTypes){
@@ -59,11 +65,20 @@ class RunSessionViewModel @Inject constructor(
         SortTypes.AVG_SPEED -> runsSortedByAverageSpeed.value?.let { runs.value = it }
         SortTypes.DISTANCE -> runsSortedByDistance.value?.let { runs.value = it }
         SortTypes.CALORIES_BURNT -> runsSortedByCaloriesBurnt.value?.let { runs.value = it }
+        SortTypes.STEPS_TAKEN -> runsSortedByStepsTaken.value?.let { runs.value = it }
     }.also {
         this.sortTypes = sortTypes
     }
 
     fun insertRunSession(runSession: RunSession) = viewModelScope.launch {
         runSessionRepository.insertRunSession(runSession)
+    }
+
+    fun deleteRunSession(runSession: RunSession) = viewModelScope.launch {
+        runSessionRepository.deleteRunSession(runSession)
+    }
+
+    fun updateRunSession(runSession: RunSession) = viewModelScope.launch {
+        runSessionRepository.updateRunSession(runSession)
     }
 }

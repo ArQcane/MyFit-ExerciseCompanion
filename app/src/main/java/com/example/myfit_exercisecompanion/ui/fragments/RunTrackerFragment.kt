@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.adapters.RunSessionAdapter
 import com.example.myfit_exercisecompanion.databinding.FragmentProfileBinding
@@ -46,8 +47,8 @@ const val CANCEL_TRACKING_DIALOG_TAG = "CancelDialog"
 @AndroidEntryPoint
 class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
 
-
     private val viewModel: RunSessionViewModel by viewModels()
+
 
     private var isTracking = false
     private var pathPoints = mutableListOf<Polyline>()
@@ -60,7 +61,11 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
 
     private var liveCaloriesBurnt = 0
 
+    private var finalCaloriesBurned = 0
+
     private var liveStepsCounted = -1
+
+    private var finalAverageSpeed = 0F
 
     private var weight = 80f
 
@@ -88,11 +93,15 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.apply {
             mapView.onCreate(savedInstanceState)
             btnToggleRun.setOnClickListener {
                 toggleRun()
+            }
+
+            btnFinishRun.setOnClickListener {
+                zoomToSeeWholeTrack()
+                sendArgsToAddNewRunFragment()
             }
 
             if(savedInstanceState != null){
@@ -103,10 +112,10 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
                 }
             }
 
-            btnFinishRun.setOnClickListener {
-                zoomToSeeWholeTrack()
-                endRunAndSaveToDb()
-            }
+//            btnFinishRun.setOnClickListener {
+//
+//                endRunAndSaveToDb()
+//            }
 
 
             mapView.getMapAsync {
@@ -115,7 +124,6 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
             }
             subscribeToObservers()
         }
-
     }
 
     private fun subscribeToObservers() {
@@ -137,7 +145,7 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
         TrackingService.liveDistance.observe(viewLifecycleOwner, Observer {
             liveDistance = it
             val formattedDistance = TrackingUtility.getFormattedLiveDistance(liveDistance)
-            binding.container.tvDistanceTravelled.text = formattedDistance
+            binding.container.tvDistance.text = formattedDistance
         })
         TrackingService.liveCaloriesBurnt.observe(viewLifecycleOwner, Observer {
             liveCaloriesBurnt = it
@@ -238,25 +246,22 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
         )
     }
 
-    private fun endRunAndSaveToDb(){
+    private fun sendArgsToAddNewRunFragment(){
         map?.snapshot { bmp ->
             var distanceInMeters = 0
             for (polyline in pathPoints) {
                 distanceInMeters += TrackingUtility.calculatePolylineLength(polyline).toInt()
             }
             val averageSpeed = round((distanceInMeters / 1000f) / (curTimeInMilis / 1000f / 60 / 60) * 10) / 10f
-            val dateTimeStamp = Calendar.getInstance().timeInMillis
+            finalAverageSpeed = averageSpeed
             val caloriesBurned = ((distanceInMeters / 1000f) * weight).toInt()
-            val runSession = RunSession(bmp, dateTimeStamp, averageSpeed, distanceInMeters, curTimeInMilis, caloriesBurned, liveStepsCounted)
-            viewModel.insertRunSession(runSession)
-            Snackbar.make(
-                requireView().rootView,
-                "Run saved Successfully",
-                Snackbar.LENGTH_LONG
-            ).show()
-            stopRun()
+            finalCaloriesBurned = caloriesBurned
+            val action = RunTrackerFragmentDirections.actionRunTrackerFragmentToAddNewRunSessionFragment(mapScreenShot = bmp, timeTaken = curTimeInMilis, distance = distanceInMeters, averageSpeed = averageSpeed, caloriesBurnt = caloriesBurned, stepsCounted = liveStepsCounted)
+            findNavController().navigate(action)
         }
+        binding.container.tvTimer.text = "00:00:00"
     }
+
 
     private fun addAllPolylines() {
         for (polyline in pathPoints) {
@@ -304,7 +309,7 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
 
     override fun onPause() {
         super.onPause()
-        binding.mapView?.onPause()
+        binding.mapView.onPause()
     }
 
     override fun onLowMemory() {

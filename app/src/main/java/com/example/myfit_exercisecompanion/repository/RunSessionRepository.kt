@@ -11,6 +11,8 @@ class RunSessionRepository @Inject constructor(
 
     suspend fun deleteRunSession(runSession : RunSession) = runSessionDAO.deleteRunSession(runSession)
 
+    suspend fun updateRunSession(runSession: RunSession) = runSessionDAO.updateRunSession(runSession)
+
     fun getAllRunSessionsSortedByDate() = runSessionDAO.getAllRunSessionsSortedByDate()
 
     fun getAllRunSessionsSortedByDistance() = runSessionDAO.getAllRunSessionsSortedByDistance()

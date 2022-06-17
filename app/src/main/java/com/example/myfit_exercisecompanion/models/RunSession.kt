@@ -9,6 +9,7 @@ import java.io.Serializable
 @Entity(tableName = "runsession")
 data class RunSession(
    var img: Bitmap? = null,
+   var runSessionTitle: String = "",
    var timestamp: Long = 0L,
    var avgSpeedInKMH: Float = 0f,
    var distanceInMeters: Int = 0,
