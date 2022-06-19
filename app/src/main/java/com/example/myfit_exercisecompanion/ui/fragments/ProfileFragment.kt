@@ -11,19 +11,16 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.myfit_exercisecompanion.R
-import com.example.myfit_exercisecompanion.databinding.FragmentHomeBinding
 import com.example.myfit_exercisecompanion.databinding.FragmentProfileBinding
 import com.example.myfit_exercisecompanion.other.CustomMarkerView
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.ui.LoginActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
-import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.StatisticsViewModel
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.round
 

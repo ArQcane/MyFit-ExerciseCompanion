@@ -1,23 +1,14 @@
 package com.example.myfit_exercisecompanion.ui.fragments
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Camera
 import android.os.Bundle
-import android.os.SystemClock
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.myfit_exercisecompanion.R
-import com.example.myfit_exercisecompanion.adapters.RunSessionAdapter
-import com.example.myfit_exercisecompanion.databinding.FragmentProfileBinding
 import com.example.myfit_exercisecompanion.databinding.FragmentRunTrackerBinding
-import com.example.myfit_exercisecompanion.models.RunSession
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_PAUSE_SERVICE
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_STOP_SERVICE
@@ -27,20 +18,13 @@ import com.example.myfit_exercisecompanion.other.Constants.POLYLINE_WIDTH
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.services.Polyline
 import com.example.myfit_exercisecompanion.services.TrackingService
-import com.example.myfit_exercisecompanion.ui.MainActivity
-
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
-
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Math.round
-import java.util.*
 
 const val CANCEL_TRACKING_DIALOG_TAG = "CancelDialog"
 

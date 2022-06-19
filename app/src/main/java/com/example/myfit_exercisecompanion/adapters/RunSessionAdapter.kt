@@ -1,14 +1,11 @@
 package com.example.myfit_exercisecompanion.adapters
 
-import android.content.ClipData
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.ItemRunSessionBinding
 import com.example.myfit_exercisecompanion.models.RunSession
 import com.example.myfit_exercisecompanion.other.TrackingUtility

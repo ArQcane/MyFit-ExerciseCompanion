@@ -6,16 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-
-
 import com.example.myfit_exercisecompanion.R
-import com.example.myfit_exercisecompanion.databinding.FragmentAddNewRunSessionBinding
 import com.example.myfit_exercisecompanion.databinding.FragmentRunSessionDetailsBinding
 import com.example.myfit_exercisecompanion.models.RunSession
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
-import kotlinx.coroutines.job
 
 
 class RunSessionDetailsFragment : Fragment(R.layout.fragment_run_session_details) {

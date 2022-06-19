@@ -2,7 +2,6 @@ package com.example.myfit_exercisecompanion.ui.fragments
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,9 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentAddNewRunSessionBinding
-import com.example.myfit_exercisecompanion.databinding.FragmentProfileBinding
 import com.example.myfit_exercisecompanion.models.RunSession
-import com.example.myfit_exercisecompanion.other.Constants
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_STOP_SERVICE
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.services.TrackingService

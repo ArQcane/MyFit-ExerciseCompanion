@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_MUTABLE
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
@@ -20,12 +19,10 @@ import android.os.Looper
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_PAUSE_SERVICE
-import com.example.myfit_exercisecompanion.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_STOP_SERVICE
 import com.example.myfit_exercisecompanion.other.Constants.FASTEST_LOCATION_INTERVAL
@@ -35,7 +32,6 @@ import com.example.myfit_exercisecompanion.other.Constants.NOTIFICATION_CHANNEL_
 import com.example.myfit_exercisecompanion.other.Constants.NOTIFICATION_ID
 import com.example.myfit_exercisecompanion.other.Constants.TIMER_UPDATE_INTERVAL
 import com.example.myfit_exercisecompanion.other.TrackingUtility
-import com.example.myfit_exercisecompanion.ui.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest

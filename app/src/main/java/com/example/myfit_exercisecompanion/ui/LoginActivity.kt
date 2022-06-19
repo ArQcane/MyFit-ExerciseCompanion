@@ -3,24 +3,13 @@ package com.example.myfit_exercisecompanion.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.viewModels
 import com.example.myfit_exercisecompanion.databinding.ActivityLoginBinding
-import com.example.myfit_exercisecompanion.db.RunSessionDAO
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
-import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint

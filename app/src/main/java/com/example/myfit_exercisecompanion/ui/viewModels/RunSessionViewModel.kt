@@ -1,6 +1,5 @@
 package com.example.myfit_exercisecompanion.ui.viewModels
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
