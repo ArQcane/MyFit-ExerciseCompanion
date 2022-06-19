@@ -12,10 +12,12 @@
         android:name=".BaseApplication">
         <activity
             android:name=".ui.ForgetPasswordActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.LoginActivity"/>
         <activity
             android:name=".ui.RegisterActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.LoginActivity"/>
         <activity
             android:name=".ui.LoginActivity"
             android:exported="true">

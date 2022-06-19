@@ -29,6 +29,9 @@ class ForgetPasswordActivity : AppCompatActivity() {
         setUpListeners()
         setUpViews()
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.title = "Forget Your Password?"
+
 //        binding.btnBackToLogin.setOnClickListener {
 //            onBackPressed()
 //        }
@@ -73,7 +76,6 @@ class ForgetPasswordActivity : AppCompatActivity() {
 
     private fun setUpListeners() {
         binding.apply {
-            toolbar.setNavigationOnClickListener { finish() }
             linkSignUp.setOnClickListener {
                 startActivity(
                     Intent(

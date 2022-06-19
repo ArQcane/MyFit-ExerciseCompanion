@@ -9,7 +9,9 @@ import androidx.core.widget.addTextChangedListener
 import com.example.myfit_exercisecompanion.databinding.ActivityLoginBinding
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -27,6 +29,25 @@ class LoginActivity : AppCompatActivity() {
         setUpViews()
         setUpListeners()
     }
+
+    override fun onStart() {
+        super.onStart()
+        val user = authViewModel.getCurrentUser()
+        if (user != null) {
+            startActivity(
+                Intent(
+                    this@LoginActivity,
+                    MainActivity::class.java
+                )
+            )
+        } else {
+            Timber.i("Error")
+        }
+    }
+
+
+
+
 
     private fun setUpViews() {
         authViewModel.email?.let {

@@ -28,6 +28,9 @@ class RegisterActivity : AppCompatActivity() {
         setUpListeners()
         setUpViews()
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.title = "Register An Account"
+
 //        binding.tvAlreadyHaveAnAccount.setOnClickListener {
 //            onBackPressed()
 //        }
@@ -100,7 +103,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setUpListeners() {
         binding.apply {
-            toolbar.setNavigationOnClickListener { finish() }
             tvAlreadyHaveAnAccount.setOnClickListener {
                 startActivity(
                     Intent(

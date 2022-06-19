@@ -32,7 +32,6 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
     fun submitList(list: List<RunSession>) = differ.submitList(list)
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunSessionViewHolder {
         val binding = ItemRunSessionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RunSessionViewHolder(binding)
