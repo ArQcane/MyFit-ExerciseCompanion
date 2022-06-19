@@ -44,6 +44,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
+
     }
 
     override fun onDestroyView() {

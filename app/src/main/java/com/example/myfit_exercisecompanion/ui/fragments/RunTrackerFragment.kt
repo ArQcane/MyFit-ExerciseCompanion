@@ -18,6 +18,7 @@ import com.example.myfit_exercisecompanion.other.Constants.POLYLINE_WIDTH
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.services.Polyline
 import com.example.myfit_exercisecompanion.services.TrackingService
+import com.example.myfit_exercisecompanion.ui.DetailsActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -51,7 +52,7 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
 
     private var finalAverageSpeed = 0F
 
-    private var weight = 80f
+    private var weight = 80.0
 
     private var menu: Menu? = null
 
@@ -108,6 +109,8 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
             }
             subscribeToObservers()
         }
+
+
     }
 
     private fun subscribeToObservers() {
@@ -139,6 +142,16 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
             liveStepsCounted = it
             binding.container.tvStepsTravelled.text = "${liveStepsCounted} Steps"
         })
+
+        viewModel.user.observe(viewLifecycleOwner) {
+            it ?: return@observe run {
+                Intent(requireContext(), DetailsActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    requireActivity().startActivity(this)
+                }
+            }
+            weight = it.weightInKG
+        }
     }
 
     private fun toggleRun() {

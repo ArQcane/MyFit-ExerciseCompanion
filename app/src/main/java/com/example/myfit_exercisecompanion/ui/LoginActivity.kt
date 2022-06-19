@@ -3,6 +3,7 @@ package com.example.myfit_exercisecompanion.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
@@ -11,6 +12,9 @@ import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
@@ -29,25 +33,6 @@ class LoginActivity : AppCompatActivity() {
         setUpViews()
         setUpListeners()
     }
-
-    override fun onStart() {
-        super.onStart()
-        val user = authViewModel.getCurrentUser()
-        if (user != null) {
-            startActivity(
-                Intent(
-                    this@LoginActivity,
-                    MainActivity::class.java
-                )
-            )
-        } else {
-            Timber.i("Error")
-        }
-    }
-
-
-
-
 
     private fun setUpViews() {
         authViewModel.email?.let {
@@ -95,6 +80,7 @@ class LoginActivity : AppCompatActivity() {
                 is AuthViewModel.AuthState.Success -> binding.apply {
                     progress.visibility = View.GONE
                     overlay.visibility = View.GONE
+                    checkUserDataPersistence()
                     Intent(
                         this@LoginActivity,
                         MainActivity::class.java
@@ -136,6 +122,24 @@ class LoginActivity : AppCompatActivity() {
                     progress.visibility = View.GONE
                     overlay.visibility = View.GONE
                 }
+            }
+        }
+    }
+
+    private fun checkUserDataPersistence() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val firestoreList = authViewModel.getCurrentUser()
+            Log.d("poly", firestoreList.toString())
+            if (firestoreList[1] == null)
+                return@launch Intent(this@LoginActivity, DetailsActivity::class.java).run {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(this)
+                    finish()
+                }
+            Intent(this@LoginActivity, MainActivity::class.java).run {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(this)
+                finish()
             }
         }
     }

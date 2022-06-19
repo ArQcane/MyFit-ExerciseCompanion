@@ -17,6 +17,8 @@ import com.example.myfit_exercisecompanion.models.RunSession
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_STOP_SERVICE
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.services.TrackingService
+import com.example.myfit_exercisecompanion.ui.DetailsActivity
+import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +36,10 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
 
     private val viewModel: RunSessionViewModel by viewModels()
 
+    private val authViewModel : AuthViewModel by viewModels()
+
+    private var weight = 60.0
+
     private val binding get() = _binding!!
 
     private var _distance: Int = 0
@@ -44,6 +50,8 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
     private var _mapScreenShot: Bitmap? = null
 
     private val dateTimeStamp = Calendar.getInstance().timeInMillis
+
+    private var email = ""
 
 
     override fun onCreateView(
@@ -107,11 +115,23 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
                 Snackbar.make(requireView(), "Please Input a title for your run", Snackbar.LENGTH_LONG).show()
             )
         }
+
+        viewModel.user.observe(viewLifecycleOwner) {
+            it ?: return@observe run {
+                Intent(requireContext(), DetailsActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    requireActivity().startActivity(this)
+                }
+            }
+            weight = it.weightInKG
+        }
+        viewModel.getAuthUser()?.let { email = it.email!! }
+        viewModel.getAuthUser()
     }
 
     private fun publishRunToDb(){
         val title = binding.etTitleRun.text.toString()
-        val runSession = RunSession(_mapScreenShot, title, dateTimeStamp, _avgSpeed, _distance, _timeTaken, _caloriesBurnt, _stepsTaken)
+        val runSession = RunSession(email, _mapScreenShot, title, dateTimeStamp, _avgSpeed, _distance, _timeTaken, _caloriesBurnt, _stepsTaken)
         viewModel.insertRunSession(runSession)
         findNavController().navigate(R.id.action_addNewRunSessionFragment_to_homeFragment)
         sendCommandToService(ACTION_STOP_SERVICE)
@@ -122,15 +142,4 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
             it.action = action
             requireContext().startService(it)
         }
-
-//    private fun endRunAndSaveToDb(){
-//            val runSession = RunSession(bmp, dateTimeStamp, averageSpeed, distanceInMeters, curTimeInMilis, caloriesBurned, liveStepsCounted)
-//            viewModel.insertRunSession(runSession)
-//            Snackbar.make(
-//                requireView().rootView,
-//                "Run saved Successfully",
-//                Snackbar.LENGTH_LONG
-//            ).show()
-//        }
-//    }
 }

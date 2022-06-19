@@ -1,74 +1,108 @@
 package com.example.myfit_exercisecompanion.ui.viewModels
 
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.myfit_exercisecompanion.models.RunSession
+import com.example.myfit_exercisecompanion.models.User
 import com.example.myfit_exercisecompanion.other.SortTypes
+import com.example.myfit_exercisecompanion.repository.AuthRepository
 import com.example.myfit_exercisecompanion.repository.RunSessionRepository
+import com.example.myfit_exercisecompanion.repository.UserRepository
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class RunSessionViewModel @Inject constructor(
-    val runSessionRepository: RunSessionRepository
+    private val runSessionRepository: RunSessionRepository,
+    private val userRepository: UserRepository,
+    private val authRepository: AuthRepository
 ): ViewModel() {
+    private val _userLoggedIn = MutableLiveData<User?>()
+    val user: LiveData<User?>
+        get() = _userLoggedIn
 
-    private val runsSortedByDate = runSessionRepository.getAllRunSessionsSortedByDate()
-    private val runsSortedByDistance = runSessionRepository.getAllRunSessionsSortedByDistance()
-    private val runsSortedByCaloriesBurnt = runSessionRepository.getAllRunSessionsSortedByCaloriesBurnt()
-    private val runsSortedByTimeInMilis = runSessionRepository.getAllRunSessionsSortedByTimeInMilis()
-    private val runsSortedByAverageSpeed = runSessionRepository.getAllRunSessionsSortedByAvgSpeed()
-    private val runsSortedByStepsTaken = runSessionRepository.getAllRunSessionsSortedBySteps()
+    fun getCurrentUser() {
+        viewModelScope.launch {
+            _userLoggedIn.postValue(userRepository.getCurrentUser())
+        }
+    }
+
+    fun runsSortedByDate(email: String) = runSessionRepository.getAllRunSessionsSortedByDate(email)
+    fun runsSortedByDistance(email: String) = runSessionRepository.getAllRunSessionsSortedByDistance(email)
+    fun runsSortedByCaloriesBurnt(email: String) = runSessionRepository.getAllRunSessionsSortedByCaloriesBurnt(email)
+    fun runsSortedByTimeInMilis(email: String) = runSessionRepository.getAllRunSessionsSortedByTimeInMilis(email)
+    fun runsSortedByAverageSpeed(email: String) = runSessionRepository.getAllRunSessionsSortedByAvgSpeed(email)
+    fun runsSortedByStepsTaken(email: String) = runSessionRepository.getAllRunSessionsSortedBySteps(email)
+
+
+    private val runsSortedByDate = runSessionRepository.getAllRunSessionsSortedByDate(getAuthUser()!!.email!!)
+    private val runsSortedByDistance = runSessionRepository.getAllRunSessionsSortedByDistance(getAuthUser()!!.email!!)
+    private val runsSortedByCaloriesBurnt = runSessionRepository.getAllRunSessionsSortedByCaloriesBurnt(getAuthUser()!!.email!!)
+    private val runsSortedByTimeInMilis = runSessionRepository.getAllRunSessionsSortedByTimeInMilis(getAuthUser()!!.email!!)
+    private val runsSortedByAverageSpeed = runSessionRepository.getAllRunSessionsSortedByAvgSpeed(getAuthUser()!!.email!!)
+    private val runsSortedByStepsTaken = runSessionRepository.getAllRunSessionsSortedBySteps(getAuthUser()!!.email!!)
 
     val runs = MediatorLiveData<List<RunSession>>()
 
     var sortTypes = SortTypes.DATE
 
     init {
-        runs.addSource(runsSortedByDate) { result ->
-            if(sortTypes == SortTypes.DATE){
-                result?.let { runs.value = it }
+        Timber.d("user email: ${getAuthUser()?.email!!}")
+        getAuthUser()?.let { user ->
+            runs.addSource(runsSortedByDate(user.email!!)) { result ->
+                if (sortTypes == SortTypes.DATE) {
+                    result?.let { runs.value = it }
+                }
+            }
+            runs.addSource(runsSortedByDistance(user.email!!)) { result ->
+                if (sortTypes == SortTypes.DISTANCE) {
+                    result?.let { runs.value = it }
+                }
+            }
+            runs.addSource(runsSortedByCaloriesBurnt(user.email!!)) { result ->
+                if (sortTypes == SortTypes.CALORIES_BURNT) {
+                    result?.let { runs.value = it }
+                }
+            }
+            runs.addSource(runsSortedByTimeInMilis(user.email!!)) { result ->
+                if (sortTypes == SortTypes.RUNNING_TIME) {
+                    result?.let { runs.value = it }
+                }
+            }
+            runs.addSource(runsSortedByAverageSpeed(user.email!!)) { result ->
+                if (sortTypes == SortTypes.AVG_SPEED) {
+                    result?.let { runs.value = it }
+                }
+            }
+            runs.addSource(runsSortedByStepsTaken(user.email!!)) { result ->
+                if (sortTypes == SortTypes.STEPS_TAKEN) {
+                    result?.let { runs.value = it }
+                }
             }
         }
-        runs.addSource(runsSortedByDistance) { result ->
-            if(sortTypes == SortTypes.DISTANCE){
-                result?.let { runs.value = it }
-            }
-        }
-        runs.addSource(runsSortedByCaloriesBurnt) { result ->
-            if(sortTypes == SortTypes.CALORIES_BURNT){
-                result?.let { runs.value = it }
-            }
-        }
-        runs.addSource(runsSortedByTimeInMilis) { result ->
-            if(sortTypes == SortTypes.RUNNING_TIME){
-                result?.let { runs.value = it }
-            }
-        }
-        runs.addSource(runsSortedByAverageSpeed) { result ->
-            if(sortTypes == SortTypes.AVG_SPEED){
-                result?.let { runs.value = it }
-            }
-        }
-        runs.addSource(runsSortedByStepsTaken){ result->
-            if(sortTypes == SortTypes.STEPS_TAKEN){
-                result?.let { runs.value = it }
+
+
+    }
+
+    fun sortRuns(sortTypes: SortTypes) {
+        getAuthUser()?.let { user ->
+            when (sortTypes) {
+                SortTypes.DATE -> runsSortedByDate(user.email!!).value?.let { runs.value = it }
+                SortTypes.RUNNING_TIME -> runsSortedByTimeInMilis(user.email!!).value?.let { runs.value = it }
+                SortTypes.AVG_SPEED -> runsSortedByAverageSpeed(user.email!!).value?.let { runs.value = it }
+                SortTypes.DISTANCE -> runsSortedByDistance(user.email!!).value?.let { runs.value = it }
+                SortTypes.CALORIES_BURNT -> runsSortedByCaloriesBurnt(user.email!!).value?.let { runs.value = it }
+                SortTypes.STEPS_TAKEN -> runsSortedByStepsTaken(user.email!!).value?.let { runs.value = it }
+            }.also {
+                this.sortTypes = sortTypes
             }
         }
     }
 
-    fun sortRuns(sortTypes: SortTypes) = when(sortTypes){
-        SortTypes.DATE -> runsSortedByDate.value?.let { runs.value = it }
-        SortTypes.RUNNING_TIME -> runsSortedByTimeInMilis.value?.let { runs.value = it }
-        SortTypes.AVG_SPEED -> runsSortedByAverageSpeed.value?.let { runs.value = it }
-        SortTypes.DISTANCE -> runsSortedByDistance.value?.let { runs.value = it }
-        SortTypes.CALORIES_BURNT -> runsSortedByCaloriesBurnt.value?.let { runs.value = it }
-        SortTypes.STEPS_TAKEN -> runsSortedByStepsTaken.value?.let { runs.value = it }
-    }.also {
-        this.sortTypes = sortTypes
-    }
+    fun getAuthUser() = authRepository.getAuthUser()
 
     fun insertRunSession(runSession: RunSession) = viewModelScope.launch {
         runSessionRepository.insertRunSession(runSession)

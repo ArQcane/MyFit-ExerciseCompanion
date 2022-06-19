@@ -4,14 +4,19 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.myfit_exercisecompanion.models.User
 import com.example.myfit_exercisecompanion.repository.AuthRepository
+import com.example.myfit_exercisecompanion.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository
 ) : ViewModel(){
 
     private val _authState = MutableLiveData<AuthState>(AuthState.Idle)
@@ -21,6 +26,9 @@ class AuthViewModel @Inject constructor(
     var email: String? = null
     var password: String? = null
     var confirmPassword: String? = null
+    var username: String? = null
+    var weight: String? = null
+    var height: String? = null
 
     fun logIn() {
         val emailCheck = !validateEmailFields(email)
@@ -52,6 +60,21 @@ class AuthViewModel @Inject constructor(
             }
     }
 
+    fun insertUserIntoFirestore() {
+        val checkingUsername = !checkUsername(username)
+        val checkingWeight = !checkWeight(weight)
+        val checkingHeight = !checkHeight(height)
+        if(checkingUsername || checkingWeight || checkingHeight) return
+        val user = User(username!!, weight!!.toDouble()/100, height!!.toDouble())
+        _authState.value = (AuthState.Loading)
+        viewModelScope.launch {
+            if(userRepository.addUser(user)){
+                return@launch _authState.postValue(AuthState.Success)
+            }
+            _authState.postValue(AuthState.FireBaseFailure())
+        }
+    }
+
     fun sendPasswordResetLinkToEmail() {
         if (!validateEmailFields(email)) return
         _authState.postValue(AuthState.Loading)
@@ -59,8 +82,8 @@ class AuthViewModel @Inject constructor(
         _authState.postValue(AuthState.Success)
     }
 
-    fun getCurrentUser() = authRepository.getCurrentUser()
-    fun signOut() = authRepository.signOutUser()
+    suspend fun getCurrentUser() = listOf(authRepository.getAuthUser(), userRepository.getCurrentUser())
+    fun signOut() = authRepository.signOut()
 
     private fun validateEmailFields(email: String?): Boolean {
         if (email.isNullOrEmpty()) return _authState.run {
@@ -95,6 +118,45 @@ class AuthViewModel @Inject constructor(
         return true
     }
 
+    private fun checkUsername(
+        username: String?,
+    ): Boolean {
+        if (username.isNullOrEmpty())
+            return _authState.run {
+                value = AuthState.InvalidUsername("Username required!")
+                false
+            }
+        return true
+    }
+
+    private fun checkWeight(weight: String?): Boolean {
+        if (weight.isNullOrEmpty())
+            return _authState.run {
+                value = AuthState.InvalidWeight("Weight required!")
+                false
+            }
+        if (weight.toDoubleOrNull() == null)
+            return _authState.run {
+                value = AuthState.InvalidWeight("Weight must be a number!")
+                false
+            }
+        return true
+    }
+
+    private fun checkHeight(height: String?): Boolean {
+        if (height.isNullOrEmpty())
+            return _authState.run {
+                value = AuthState.InvalidHeight("Height required!")
+                false
+            }
+        if (height.toDoubleOrNull() == null)
+            return _authState.run {
+                value = AuthState.InvalidHeight("Height must be a number!")
+                false
+            }
+        return true
+    }
+
     sealed class AuthState {
         object Idle : AuthState()
         object Loading : AuthState()
@@ -102,6 +164,9 @@ class AuthViewModel @Inject constructor(
         class InvalidEmail(val message: String) : AuthState()
         class InvalidPassword(val message: String) : AuthState()
         class InvalidConfirmPassword(val message: String) : AuthState()
-        class FireBaseFailure(val message: String?) : AuthState()
+        class InvalidUsername(val message: String) : AuthState()
+        class InvalidWeight(val message: String) : AuthState()
+        class InvalidHeight(val message: String) : AuthState()
+        class FireBaseFailure(val message: String? = null) : AuthState()
     }
 }

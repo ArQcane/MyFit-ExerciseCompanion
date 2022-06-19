@@ -103,14 +103,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         subscribeToObservers()
         setupBarChart()
 
-        val userId = activity?.intent?.getStringExtra("user_id")
-        val emailId = activity?.intent?.getStringExtra("email_id")
-
-
-
-        binding.tvUserId.text = "User ID :: ${authViewModel.getCurrentUser()}"
-        binding.tvEmailId.text = "Email ID :: $emailId"
-
         binding.btnLogout.setOnClickListener {
             authViewModel.signOut()
             Intent(requireContext(), LoginActivity::class.java).let {
