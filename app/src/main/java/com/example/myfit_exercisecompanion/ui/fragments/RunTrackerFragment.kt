@@ -259,7 +259,6 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
             val action = RunTrackerFragmentDirections.actionRunTrackerFragmentToAddNewRunSessionFragment(mapScreenShot = bmp, timeTaken = curTimeInMilis, distance = distanceInMeters, averageSpeed = averageSpeed, caloriesBurnt = caloriesBurned, stepsCounted = liveStepsCounted)
             findNavController().navigate(action)
         }
-        binding.container.tvTimer.text = "00:00:00"
     }
 
 

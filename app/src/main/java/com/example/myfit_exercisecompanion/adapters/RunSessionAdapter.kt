@@ -1,5 +1,6 @@
 package com.example.myfit_exercisecompanion.adapters
 
+import android.content.ClipData
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,7 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
 
     override fun onBindViewHolder(holder: RunSessionViewHolder, position: Int) {
         val runSession = differ.currentList[position]
+
         with(holder){
             holder.itemView.apply {
                 Glide.with(this).load(runSession.img).into(binding.ivMapImage)
@@ -68,10 +70,6 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
 
                 val title = "${runSession.runSessionTitle}"
                 binding.tvRunTitle.text = title
-
-                binding.btnEditRun.setOnClickListener {
-                    editRun()
-                }
             }
         }
     }

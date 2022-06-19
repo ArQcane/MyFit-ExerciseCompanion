@@ -78,103 +78,118 @@
         app:layout_constraintVertical_bias="0.177"
         app:srcCompat="@drawable/undraw_login_re_4vu2" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserratregular"
+        android:text="Enter your login credentials here"
+        android:textAlignment="center"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRegisterNewAccount" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="350dp"
-        android:layout_height="400dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_login_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textColorHint="@color/white"
+        app:hintTextColor="@color/white"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableLeft="@drawable/ic_baseline_person_24"
+            android:drawablePadding="20dp"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/montserratregular"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:textColorHint="@color/white"
+        app:hintTextColor="@color/white"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_login_email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="20dp"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/montserratregular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvForgetPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Forgot Passcode?"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorGreen"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_login_password" />
+
+    <Button
+        android:id="@+id/btn_login"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/colorDarkGreen"
+        android:text="Login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvForgetPassword" />
+
+    <TextView
+        android:id="@+id/tvRegisterNewAccount2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/are_you_a_new_user_register_with_us"
+        android:textAlignment="center"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+    <TextView
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register2Tv"
-        app:layout_constraintVertical_bias="0.32">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="448dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/montserratregular"
-                android:text="Enter your login credentials here"
-                android:textAlignment="center"
-                android:textSize="14dp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_login_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:textColorHint="@color/white"
-                app:hintTextColor="@color/white"
-                android:layout_marginRight="10dp"
-                android:hint="Email">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_login_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_baseline_person_24"
-                    android:textColor="@color/white"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:drawableTint="@color/white"
-                    android:drawablePadding="20dp"
-                    android:fontFamily="@font/montserratregular" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_login_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:textColorHint="@color/white"
-                app:hintTextColor="@color/white"
-                android:hint="Password">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_login_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_baseline_lock_24"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:drawableTint="@color/white"
-                    android:drawablePadding="20dp"
-                    android:fontFamily="@font/montserratregular" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/tvForgetPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Forgot Passcode?"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorGreen" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:backgroundTint="@color/colorDarkGreen"
-                android:text="Login" />
-
-            <TextView
-                android:id="@+id/tvRegisterNewAccount2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/are_you_a_new_user_register_with_us"
-                android:textAlignment="center"
-                android:textSize="14dp" />
-
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

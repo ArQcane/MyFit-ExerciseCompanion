@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.RegisterActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="84dp"
@@ -14,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.057"
         app:srcCompat="@drawable/fit_running_logo_template_transparent" />
 
@@ -57,91 +67,119 @@
         app:layout_constraintVertical_bias="0.177"
         app:srcCompat="@drawable/undraw_access_account_re_8spm" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="350dp"
-        android:layout_height="400dp"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserratregular"
+        android:text="Fill up the boxes to register a new account"
+        android:textAlignment="center"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register2Tv" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilRegisterEmail"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Email" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilRegisterPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:endIconMode="password_toggle"
+        app:layout_constraintEnd_toEndOf="@id/tilRegisterEmail"
+        app:layout_constraintStart_toStartOf="@id/tilRegisterEmail"
+        app:layout_constraintTop_toBottomOf="@id/tilRegisterEmail"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilConfirmPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:nextFocusDown="@id/btnRegister"
+        app:endIconMode="password_toggle"
+        app:layout_constraintEnd_toEndOf="@id/tilRegisterPassword"
+        app:layout_constraintStart_toStartOf="@id/tilRegisterPassword"
+        app:layout_constraintTop_toBottomOf="@id/tilRegisterPassword"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Confirm password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnRegister"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@color/colorDarkGreen"
+        android:text="Register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilConfirmPassword" />
+
+    <TextView
+        android:id="@+id/tvAlreadyHaveAnAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/already_have_an_account_login_here"
+        android:textAlignment="center"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
+
+    <TextView
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register2Tv">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/montserratregular"
-                android:text="Fill up the boxes to register a new account"
-                android:textAlignment="center"
-                android:textSize="14dp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_register_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:textColorHint="@color/white"
-                app:hintTextColor="@color/white"
-                android:hint="Email Address">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_register_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_baseline_person_24"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:drawableTint="@color/white"
-                    android:drawablePadding="20dp"
-                    android:fontFamily="@font/montserratregular" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_register_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:textColorHint="@color/white"
-                app:hintTextColor="@color/white"
-                android:hint="Password">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_register_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_baseline_lock_24"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:drawableTint="@color/white"
-                    android:drawablePadding="20dp"
-                    android:fontFamily="@font/montserratregular" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:backgroundTint="@color/colorDarkGreen"
-                android:text="Register" />
-
-            <TextView
-                android:id="@+id/tvAlreadyHaveAnAccount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/already_have_an_account_login_here"
-                android:textAlignment="center"
-                android:textSize="14dp" />
-
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

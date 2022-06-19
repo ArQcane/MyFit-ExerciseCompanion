@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_homeFragment_to_runTrackerFragment"
             app:destination="@id/runTrackerFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_runSessionDetailsFragment"
+            app:destination="@id/runSessionDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/runTrackerFragment"
@@ -86,5 +89,15 @@
         <action
             android:id="@+id/action_addNewRunSessionFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/runSessionDetailsFragment"
+        android:name="com.example.myfit_exercisecompanion.ui.fragments.RunSessionDetailsFragment"
+        android:label="fragment_run_session_details"
+        tools:layout="@layout/fragment_run_session_details" >
+    <argument
+        android:name="item_id"
+        app:argType="integer" />
     </fragment>
 </navigation>

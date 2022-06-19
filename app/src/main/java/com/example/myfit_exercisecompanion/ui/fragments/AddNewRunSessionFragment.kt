@@ -1,5 +1,6 @@
 package com.example.myfit_exercisecompanion.ui.fragments
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -15,7 +16,10 @@ import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentAddNewRunSessionBinding
 import com.example.myfit_exercisecompanion.databinding.FragmentProfileBinding
 import com.example.myfit_exercisecompanion.models.RunSession
+import com.example.myfit_exercisecompanion.other.Constants
+import com.example.myfit_exercisecompanion.other.Constants.ACTION_STOP_SERVICE
 import com.example.myfit_exercisecompanion.other.TrackingUtility
+import com.example.myfit_exercisecompanion.services.TrackingService
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -99,7 +103,12 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnPublishRun.setOnClickListener {
-            publishRunToDb()
+            if(binding.etTitleRun.text?.isNotEmpty() == true){
+                publishRunToDb()
+            }
+            else(
+                Snackbar.make(requireView(), "Please Input a title for your run", Snackbar.LENGTH_LONG).show()
+            )
         }
     }
 
@@ -108,7 +117,14 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
         val runSession = RunSession(_mapScreenShot, title, dateTimeStamp, _avgSpeed, _distance, _timeTaken, _caloriesBurnt, _stepsTaken)
         viewModel.insertRunSession(runSession)
         findNavController().navigate(R.id.action_addNewRunSessionFragment_to_homeFragment)
+        sendCommandToService(ACTION_STOP_SERVICE)
     }
+
+    private fun sendCommandToService(action: String) =
+        Intent(requireContext(), TrackingService::class.java).also {
+            it.action = action
+            requireContext().startService(it)
+        }
 
 //    private fun endRunAndSaveToDb(){
 //            val runSession = RunSession(bmp, dateTimeStamp, averageSpeed, distanceInMeters, curTimeInMilis, caloriesBurned, liveStepsCounted)
@@ -120,6 +136,4 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
 //            ).show()
 //        }
 //    }
-
-
 }

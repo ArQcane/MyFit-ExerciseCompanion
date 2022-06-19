@@ -16,6 +16,7 @@ import com.example.myfit_exercisecompanion.databinding.FragmentProfileBinding
 import com.example.myfit_exercisecompanion.other.CustomMarkerView
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.ui.LoginActivity
+import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.StatisticsViewModel
 import com.github.mikephil.charting.components.XAxis
@@ -30,6 +31,8 @@ import kotlin.math.round
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private val viewModel: StatisticsViewModel by viewModels()
+
+    private val authViewModel: AuthViewModel by viewModels()
 
     private var _binding: FragmentProfileBinding? = null
 
@@ -102,6 +105,24 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
         setupBarChart()
+
+        val userId = activity?.intent?.getStringExtra("user_id")
+        val emailId = activity?.intent?.getStringExtra("email_id")
+
+
+
+        binding.tvUserId.text = "User ID :: ${authViewModel.getCurrentUser()}"
+        binding.tvEmailId.text = "Email ID :: $emailId"
+
+        binding.btnLogout.setOnClickListener {
+            authViewModel.signOut()
+            Intent(requireContext(), LoginActivity::class.java).let {
+                requireActivity().apply {
+                    startActivity(it)
+                    finish()
+                }
+            }
+        }
     }
 
     private fun setupBarChart(){

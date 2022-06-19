@@ -19,5 +19,6 @@
         <item>Distance</item>
         <item>Average Speed</item>
         <item>Calories Burned</item>
+        <item>Steps Taken</item>
     </string-array>
 </resources>

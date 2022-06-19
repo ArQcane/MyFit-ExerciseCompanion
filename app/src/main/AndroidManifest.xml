@@ -31,6 +31,8 @@
             android:launchMode="singleTask">
         </activity>
         <service android:name=".services.TrackingService"
+            android:exported="false"
+            android:enabled="true"
             android:foregroundServiceType="location"/>
 
         <meta-data
@@ -47,4 +49,7 @@
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <permission
+        android:name="com.app.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
 </manifest>
