@@ -10,7 +10,6 @@ import androidx.core.widget.addTextChangedListener
 import com.example.myfit_exercisecompanion.databinding.ActivityLoginBinding
 import com.example.myfit_exercisecompanion.ui.MainActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
-import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope

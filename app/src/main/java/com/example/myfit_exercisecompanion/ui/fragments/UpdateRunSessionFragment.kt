@@ -1,6 +1,5 @@
 package com.example.myfit_exercisecompanion.ui.fragments
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -8,19 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.myfit_exercisecompanion.R
-import com.example.myfit_exercisecompanion.databinding.FragmentRunTrackerBinding
 import com.example.myfit_exercisecompanion.databinding.FragmentUpdateRunSessionBinding
-import com.example.myfit_exercisecompanion.models.RunSession
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_update_run_session.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,8 +65,6 @@ class UpdateRunSessionFragment : Fragment(R.layout.fragment_update_run_session) 
         binding.btnUpdateRun.setOnClickListener {
             updateItem()
         }
-
-
         return view
     }
 

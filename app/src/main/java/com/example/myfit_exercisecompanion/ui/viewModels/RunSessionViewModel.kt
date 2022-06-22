@@ -9,10 +9,8 @@ import com.example.myfit_exercisecompanion.other.SortTypes
 import com.example.myfit_exercisecompanion.repository.AuthRepository
 import com.example.myfit_exercisecompanion.repository.RunSessionRepository
 import com.example.myfit_exercisecompanion.repository.UserRepository
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

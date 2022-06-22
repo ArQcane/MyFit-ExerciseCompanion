@@ -11,7 +11,6 @@ import com.example.myfit_exercisecompanion.databinding.ItemRunSessionBinding
 import com.example.myfit_exercisecompanion.models.RunSession
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.ui.fragments.HomeFragmentDirections
-import com.example.myfit_exercisecompanion.ui.fragments.UpdateRunSessionFragmentDirections
 import kotlinx.android.synthetic.main.item_run_session.view.*
 import java.text.SimpleDateFormat
 import java.util.*
