@@ -24,18 +24,12 @@ class RunSessionViewModel @Inject constructor(
     val user: LiveData<User?>
         get() = _userLoggedIn
 
-    fun getCurrentUser() {
-        viewModelScope.launch {
-            _userLoggedIn.postValue(userRepository.getCurrentUser())
-        }
-    }
-
-    fun runsSortedByDate(email: String) = runSessionRepository.getAllRunSessionsSortedByDate(email)
-    fun runsSortedByDistance(email: String) = runSessionRepository.getAllRunSessionsSortedByDistance(email)
-    fun runsSortedByCaloriesBurnt(email: String) = runSessionRepository.getAllRunSessionsSortedByCaloriesBurnt(email)
-    fun runsSortedByTimeInMilis(email: String) = runSessionRepository.getAllRunSessionsSortedByTimeInMilis(email)
-    fun runsSortedByAverageSpeed(email: String) = runSessionRepository.getAllRunSessionsSortedByAvgSpeed(email)
-    fun runsSortedByStepsTaken(email: String) = runSessionRepository.getAllRunSessionsSortedBySteps(email)
+    private val runsSortedByDate = runSessionRepository.getAllRunSessionsSortedByDate(getAuthUser()?.email!!)
+    private val runsSortedByDistance = runSessionRepository.getAllRunSessionsSortedByDistance(getAuthUser()?.email!!)
+    private val runsSortedByCaloriesBurnt = runSessionRepository.getAllRunSessionsSortedByCaloriesBurnt(getAuthUser()?.email!!)
+    private val runsSortedByTimeInMilis = runSessionRepository.getAllRunSessionsSortedByTimeInMilis(getAuthUser()?.email!!)
+    private val runsSortedByAverageSpeed = runSessionRepository.getAllRunSessionsSortedByAvgSpeed(getAuthUser()?.email!!)
+    private val runsSortedByStepsTaken = runSessionRepository.getAllRunSessionsSortedBySteps(getAuthUser()?.email!!)
 
 
     val runs = MediatorLiveData<List<RunSession>>()
@@ -43,52 +37,49 @@ class RunSessionViewModel @Inject constructor(
     var sortTypes = SortTypes.DATE
 
     init {
-        Timber.d("user email: ${getAuthUser()?.email!!}")
-        getAuthUser()?.let { user ->
-            runs.addSource(runsSortedByDate(user.email!!)) { result ->
+        getAuthUser()?.email?.let { user ->
+            runs.addSource(runsSortedByDate) { result ->
                 if (sortTypes == SortTypes.DATE) {
                     result?.let { runs.value = it }
                 }
             }
-            runs.addSource(runsSortedByDistance(user.email!!)) { result ->
+            runs.addSource(runsSortedByDistance) { result ->
                 if (sortTypes == SortTypes.DISTANCE) {
                     result?.let { runs.value = it }
                 }
             }
-            runs.addSource(runsSortedByCaloriesBurnt(user.email!!)) { result ->
+            runs.addSource(runsSortedByCaloriesBurnt) { result ->
                 if (sortTypes == SortTypes.CALORIES_BURNT) {
                     result?.let { runs.value = it }
                 }
             }
-            runs.addSource(runsSortedByTimeInMilis(user.email!!)) { result ->
+            runs.addSource(runsSortedByTimeInMilis) { result ->
                 if (sortTypes == SortTypes.RUNNING_TIME) {
                     result?.let { runs.value = it }
                 }
             }
-            runs.addSource(runsSortedByAverageSpeed(user.email!!)) { result ->
+            runs.addSource(runsSortedByAverageSpeed) { result ->
                 if (sortTypes == SortTypes.AVG_SPEED) {
                     result?.let { runs.value = it }
                 }
             }
-            runs.addSource(runsSortedByStepsTaken(user.email!!)) { result ->
+            runs.addSource(runsSortedByStepsTaken) { result ->
                 if (sortTypes == SortTypes.STEPS_TAKEN) {
                     result?.let { runs.value = it }
                 }
             }
         }
-
-
     }
 
     fun sortRuns(sortTypes: SortTypes) {
         getAuthUser()?.let { user ->
             when (sortTypes) {
-                SortTypes.DATE -> runsSortedByDate(user.email!!).value?.let { runs.value = it }
-                SortTypes.RUNNING_TIME -> runsSortedByTimeInMilis(user.email!!).value?.let { runs.value = it }
-                SortTypes.AVG_SPEED -> runsSortedByAverageSpeed(user.email!!).value?.let { runs.value = it }
-                SortTypes.DISTANCE -> runsSortedByDistance(user.email!!).value?.let { runs.value = it }
-                SortTypes.CALORIES_BURNT -> runsSortedByCaloriesBurnt(user.email!!).value?.let { runs.value = it }
-                SortTypes.STEPS_TAKEN -> runsSortedByStepsTaken(user.email!!).value?.let { runs.value = it }
+                SortTypes.DATE -> runsSortedByDate.value?.let { runs.value = it }
+                SortTypes.RUNNING_TIME -> runsSortedByTimeInMilis.value?.let { runs.value = it }
+                SortTypes.AVG_SPEED -> runsSortedByAverageSpeed.value?.let { runs.value = it }
+                SortTypes.DISTANCE -> runsSortedByDistance.value?.let { runs.value = it }
+                SortTypes.CALORIES_BURNT -> runsSortedByCaloriesBurnt.value?.let { runs.value = it }
+                SortTypes.STEPS_TAKEN -> runsSortedByStepsTaken.value?.let { runs.value = it }
             }.also {
                 this.sortTypes = sortTypes
             }
