@@ -22,18 +22,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyFitExerciseCompanion">
         <activity
-            android:name=".ui.DetailsActivity"
+            android:name=".ui.activities.DetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ForgetPasswordActivity"
+            android:name=".ui.activities.ForgetPasswordActivity"
             android:exported="false"
-            android:parentActivityName=".ui.LoginActivity" />
+            android:parentActivityName=".ui.activities.LoginActivity" />
         <activity
-            android:name=".ui.RegisterActivity"
+            android:name=".ui.activities.RegisterActivity"
             android:exported="true"
-            android:parentActivityName=".ui.LoginActivity" />
+            android:parentActivityName=".ui.activities.LoginActivity" />
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

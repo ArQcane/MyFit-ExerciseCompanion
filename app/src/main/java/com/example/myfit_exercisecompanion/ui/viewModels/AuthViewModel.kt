@@ -60,12 +60,18 @@ class AuthViewModel @Inject constructor(
             }
     }
 
+
+    suspend fun getCurrentUserState() = hashMapOf(
+        "firebaseUser" to authRepository.getAuthUser(),
+        "firestoreUser" to userRepository.getCurrentUser()
+    )
+
     fun insertUserIntoFirestore() {
         val checkingUsername = !checkUsername(username)
         val checkingWeight = !checkWeight(weight)
         val checkingHeight = !checkHeight(height)
         if(checkingUsername || checkingWeight || checkingHeight) return
-        val user = User(username!!, weight!!.toDouble()/100, height!!.toDouble())
+        val user = User(username!!, authRepository.getAuthUser()!!.email!!, height!!.toDouble() / 100, weight!!.toDouble())
         _authState.value = (AuthState.Loading)
         viewModelScope.launch {
             if(userRepository.addUser(user)){

@@ -19,7 +19,7 @@ class RunSessionRepository @Inject constructor(
 
     suspend fun deleteRunSession(runSession : RunSession) {
         withContext(Dispatchers.IO){
-            runSessionDAO.insertRunSession(runSession)
+            runSessionDAO.deleteRunSession(runSession)
         }
     }
 

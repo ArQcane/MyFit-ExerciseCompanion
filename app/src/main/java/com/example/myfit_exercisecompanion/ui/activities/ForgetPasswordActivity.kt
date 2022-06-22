@@ -1,4 +1,4 @@
-package com.example.myfit_exercisecompanion.ui
+package com.example.myfit_exercisecompanion.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -31,41 +31,6 @@ class ForgetPasswordActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = "Forget Your Password?"
-
-//        binding.btnBackToLogin.setOnClickListener {
-//            onBackPressed()
-//        }
-//
-//        binding.sendRequest.setOnClickListener {
-//            val email: String = binding.etForgetPasswordEmail.text.toString().trim { it <= ' ' }
-//            if(email.isEmpty()){
-//                Toast.makeText(
-//                    this@ForgetPasswordActivity,
-//                    "Please Enter an existing email address",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//            else{
-//                FirebaseAuth.getInstance().sendPasswordResetEmail(email)
-//                    .addOnCompleteListener { task ->
-//                        if(task.isSuccessful){
-//                            Toast.makeText(
-//                                this@ForgetPasswordActivity,
-//                                "Email sent successfully to reset your password",
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//
-//                            finish()
-//                        }else{
-//                            Toast.makeText(
-//                                this@ForgetPasswordActivity,
-//                                task.exception!!.message.toString(),
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                        }
-//                    }
-//            }
-//        }
     }
 
     private fun setUpViews() {

@@ -1,4 +1,4 @@
-package com.example.myfit_exercisecompanion.ui
+package com.example.myfit_exercisecompanion.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
-import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.ActivityDetailsBinding
+import com.example.myfit_exercisecompanion.ui.MainActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

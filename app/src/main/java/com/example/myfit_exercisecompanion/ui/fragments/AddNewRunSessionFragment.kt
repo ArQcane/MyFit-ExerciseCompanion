@@ -17,11 +17,14 @@ import com.example.myfit_exercisecompanion.models.RunSession
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_STOP_SERVICE
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.services.TrackingService
-import com.example.myfit_exercisecompanion.ui.DetailsActivity
+import com.example.myfit_exercisecompanion.ui.activities.DetailsActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -75,9 +78,13 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
         val mapScreenShot = args.mapScreenShot
         _mapScreenShot = mapScreenShot
 
+
+
         Timber.d("image: ${mapScreenShot}")
 
         Glide.with(this).load(mapScreenShot).into(binding.ivMapImage)
+
+
 
         binding.apply {
             ivMapImage.setImageResource(R.drawable.ic_baseline_wifi_protected_setup_24)
@@ -89,10 +96,10 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
             val calendar = Calendar.getInstance().timeInMillis
             val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
             tvDate.text = dateFormat.format(calendar)
+            CoroutineScope(Dispatchers.Main).launch{
+                tvUsername.text = viewModel.getAuthUser()?.email
+            }
         }
-
-        Timber.d("Values :" +
-                "${distance}, ${timeTaken}, ${avgSpeed}, $caloriesBurnt, $stepsTaken")
 
 
         val view = binding.root
@@ -123,7 +130,7 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
                     requireActivity().startActivity(this)
                 }
             }
-            weight = it.weightInKG
+            weight = it.weightInKilograms
         }
         viewModel.getAuthUser()?.let { email = it.email!! }
         viewModel.getAuthUser()

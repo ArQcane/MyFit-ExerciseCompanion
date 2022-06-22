@@ -18,7 +18,7 @@ class UserRepository @Inject constructor(
     suspend fun deleteUser(email: String) = withContext(Dispatchers.IO){
         userDao.deleteUser(email)
     }
-    suspend fun updateUser(pair: Pair<String, Any>) = withContext(Dispatchers.IO){
-        userDao.updateUser(pair)
+    suspend fun updateUser(map: Map<String, Any>) = withContext(Dispatchers.IO){
+        userDao.updateUser(map)
     }
 }

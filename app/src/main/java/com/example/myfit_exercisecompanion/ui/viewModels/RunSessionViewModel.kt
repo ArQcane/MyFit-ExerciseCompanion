@@ -38,13 +38,6 @@ class RunSessionViewModel @Inject constructor(
     fun runsSortedByStepsTaken(email: String) = runSessionRepository.getAllRunSessionsSortedBySteps(email)
 
 
-    private val runsSortedByDate = runSessionRepository.getAllRunSessionsSortedByDate(getAuthUser()!!.email!!)
-    private val runsSortedByDistance = runSessionRepository.getAllRunSessionsSortedByDistance(getAuthUser()!!.email!!)
-    private val runsSortedByCaloriesBurnt = runSessionRepository.getAllRunSessionsSortedByCaloriesBurnt(getAuthUser()!!.email!!)
-    private val runsSortedByTimeInMilis = runSessionRepository.getAllRunSessionsSortedByTimeInMilis(getAuthUser()!!.email!!)
-    private val runsSortedByAverageSpeed = runSessionRepository.getAllRunSessionsSortedByAvgSpeed(getAuthUser()!!.email!!)
-    private val runsSortedByStepsTaken = runSessionRepository.getAllRunSessionsSortedBySteps(getAuthUser()!!.email!!)
-
     val runs = MediatorLiveData<List<RunSession>>()
 
     var sortTypes = SortTypes.DATE

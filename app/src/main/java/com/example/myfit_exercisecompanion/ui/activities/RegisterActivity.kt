@@ -1,4 +1,4 @@
-package com.example.myfit_exercisecompanion.ui
+package com.example.myfit_exercisecompanion.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -31,64 +31,8 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = "Register An Account"
 
-//        binding.tvAlreadyHaveAnAccount.setOnClickListener {
-//            onBackPressed()
-//        }
-//
-//        binding.btnRegister.setOnClickListener {
-//            when{
-//                TextUtils.isEmpty(binding.etRegisterEmail.text.toString().trim { it <= ' ' }) -> {
-//                    Toast.makeText(
-//                        this@RegisterActivity,
-//                        "Please enter your email",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//
-//                TextUtils.isEmpty(binding.etRegisterPassword.text.toString().trim{ it <= ' '}) -> {
-//                    Toast.makeText(
-//                        this@RegisterActivity,
-//                        "Please enter your password",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//                else -> {
-//
-//                    val email : String = binding.etRegisterEmail.text.toString().trim { it <= ' ' }
-//                    val password: String = binding.etRegisterPassword.text.toString().trim { it <= ' ' }
-//
-//                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-//                        .addOnCompleteListener(
-//                            OnCompleteListener<AuthResult> { task ->
-//                                if(task.isSuccessful){
-//
-//                                    val firebaseUser : FirebaseUser = task.result!!.user!!
-//
-//                                    Toast.makeText(
-//                                        this@RegisterActivity,
-//                                        "You are registered successfully.",
-//                                        Toast.LENGTH_SHORT
-//                                    ).show()
-//
-//                                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-//                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                                    intent.putExtra("user_id", firebaseUser.uid)
-//                                    intent.putExtra("email_id", email)
-//                                    startActivity(intent)
-//                                    finish()
-//                                } else {
-//                                    Toast.makeText(
-//                                        this@RegisterActivity,
-//                                        task.exception!!.message.toString(),
-//                                        Toast.LENGTH_SHORT
-//                                    ).show()
-//                                }
-//                            }
-//                        )
-//                }
-//            }
-//        }
     }
+
     private fun setUpViews() {
         authViewModel.email?.let {
             binding.tilRegisterEmail.editText?.setText(it)

@@ -12,6 +12,7 @@ import com.example.myfit_exercisecompanion.databinding.ActivityMainBinding
 import com.example.myfit_exercisecompanion.db.RunSessionDAO
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -51,6 +52,8 @@ class MainActivity : AppCompatActivity() {
                 else -> View.GONE
             }
         }
+
+
 
     }
 

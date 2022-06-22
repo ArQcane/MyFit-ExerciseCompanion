@@ -18,7 +18,7 @@ import com.example.myfit_exercisecompanion.other.Constants.POLYLINE_WIDTH
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.services.Polyline
 import com.example.myfit_exercisecompanion.services.TrackingService
-import com.example.myfit_exercisecompanion.ui.DetailsActivity
+import com.example.myfit_exercisecompanion.ui.activities.DetailsActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -150,7 +150,7 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
                     requireActivity().startActivity(this)
                 }
             }
-            weight = it.weightInKG
+            weight = it.weightInKilograms
         }
     }
 

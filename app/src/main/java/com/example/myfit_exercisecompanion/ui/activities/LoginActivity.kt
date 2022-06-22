@@ -1,4 +1,4 @@
-package com.example.myfit_exercisecompanion.ui
+package com.example.myfit_exercisecompanion.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,14 +8,14 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import com.example.myfit_exercisecompanion.databinding.ActivityLoginBinding
+import com.example.myfit_exercisecompanion.ui.MainActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
+import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -53,21 +53,17 @@ class LoginActivity : AppCompatActivity() {
                 tilLoginPassword.isErrorEnabled = false
                 authViewModel.password = it.toString()
             }
-            btnLogin.setOnClickListener { authViewModel.logIn() }
-            tvRegisterNewAccount2.setOnClickListener {
+            btnLogin.setOnClickListener {
+                authViewModel.logIn()
+            }
+            register2Tv.setOnClickListener {
                 startActivity(
-                    Intent(
-                        this@LoginActivity,
-                        RegisterActivity::class.java
-                    )
+                    Intent(this@LoginActivity, RegisterActivity::class.java)
                 )
             }
             tvForgetPassword.setOnClickListener {
                 startActivity(
-                    Intent(
-                        this@LoginActivity,
-                        ForgetPasswordActivity::class.java
-                    )
+                    Intent(this@LoginActivity, ForgetPasswordActivity::class.java)
                 )
             }
         }
@@ -75,20 +71,12 @@ class LoginActivity : AppCompatActivity() {
             when (it) {
                 is AuthViewModel.AuthState.Loading -> binding.apply {
                     progress.visibility = View.VISIBLE
-                    overlay.visibility = View.VISIBLE
+                    overlay.visibility = View.GONE
                 }
                 is AuthViewModel.AuthState.Success -> binding.apply {
                     progress.visibility = View.GONE
                     overlay.visibility = View.GONE
                     checkUserDataPersistence()
-                    Intent(
-                        this@LoginActivity,
-                        MainActivity::class.java
-                    ).run {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(this)
-                        finish()
-                    }
                 }
                 is AuthViewModel.AuthState.FireBaseFailure -> binding.apply {
                     progress.visibility = View.GONE
@@ -104,7 +92,6 @@ class LoginActivity : AppCompatActivity() {
                 }
                 is AuthViewModel.AuthState.InvalidEmail -> binding.apply {
                     progress.visibility = View.GONE
-                    overlay.visibility = View.GONE
                     tilLoginEmail.apply {
                         isErrorEnabled = true
                         error = it.message
@@ -112,7 +99,6 @@ class LoginActivity : AppCompatActivity() {
                 }
                 is AuthViewModel.AuthState.InvalidPassword -> binding.apply {
                     progress.visibility = View.GONE
-                    overlay.visibility = View.GONE
                     tilLoginPassword.apply {
                         isErrorEnabled = true
                         error = it.message
@@ -120,7 +106,6 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else -> binding.apply {
                     progress.visibility = View.GONE
-                    overlay.visibility = View.GONE
                 }
             }
         }
@@ -128,9 +113,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checkUserDataPersistence() {
         CoroutineScope(Dispatchers.Main).launch {
-            val firestoreList = authViewModel.getCurrentUser()
-            Log.d("poly", firestoreList.toString())
-            if (firestoreList[1] == null)
+            val list = authViewModel.getCurrentUser()
+            Log.d("poly", list.toString())
+            if (list[1] == null)
                 return@launch Intent(this@LoginActivity, DetailsActivity::class.java).run {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(this)

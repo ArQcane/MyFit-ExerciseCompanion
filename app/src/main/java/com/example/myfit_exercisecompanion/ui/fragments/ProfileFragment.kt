@@ -14,7 +14,7 @@ import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentProfileBinding
 import com.example.myfit_exercisecompanion.other.CustomMarkerView
 import com.example.myfit_exercisecompanion.other.TrackingUtility
-import com.example.myfit_exercisecompanion.ui.LoginActivity
+import com.example.myfit_exercisecompanion.ui.activities.LoginActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.StatisticsViewModel
 import com.github.mikephil.charting.components.XAxis
