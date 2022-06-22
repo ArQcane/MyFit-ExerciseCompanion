@@ -56,7 +56,12 @@ class LoginActivity : AppCompatActivity() {
             btnLogin.setOnClickListener {
                 authViewModel.logIn()
             }
-            register2Tv.setOnClickListener {
+            tvRegisterNewAccount.setOnClickListener {
+                startActivity(
+                    Intent(this@LoginActivity, RegisterActivity::class.java)
+                )
+            }
+            tvRegisterNewAccount2.setOnClickListener {
                 startActivity(
                     Intent(this@LoginActivity, RegisterActivity::class.java)
                 )
@@ -71,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
             when (it) {
                 is AuthViewModel.AuthState.Loading -> binding.apply {
                     progress.visibility = View.VISIBLE
-                    overlay.visibility = View.GONE
+                    overlay.visibility = View.VISIBLE
                 }
                 is AuthViewModel.AuthState.Success -> binding.apply {
                     progress.visibility = View.GONE

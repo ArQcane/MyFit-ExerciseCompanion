@@ -20,7 +20,5 @@ class StatisticsViewModel @Inject constructor(
     val totalCaloriesBurned = runSessionRepository.getTotalCaloriesBurnt(getAuthUser()!!.email!!)
     val totalAvgSpeed = runSessionRepository.getTotalAvgSpeed(getAuthUser()!!.email!!)
     val totalStepsTaken = runSessionRepository.getTotalSteps(getAuthUser()!!.email!!)
-
     val runsSortedByDate = runSessionRepository.getAllRunSessionsSortedByDate(getAuthUser()!!.email!!)
-
 }

@@ -2,6 +2,7 @@ package com.example.myfit_exercisecompanion.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,9 @@ import com.bumptech.glide.Glide
 import com.example.myfit_exercisecompanion.databinding.ItemRunSessionBinding
 import com.example.myfit_exercisecompanion.models.RunSession
 import com.example.myfit_exercisecompanion.other.TrackingUtility
+import com.example.myfit_exercisecompanion.ui.fragments.HomeFragmentDirections
+import com.example.myfit_exercisecompanion.ui.fragments.UpdateRunSessionFragmentDirections
+import kotlinx.android.synthetic.main.item_run_session.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -66,6 +70,11 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
 
                 val title = "${runSession.runSessionTitle}"
                 binding.tvRunTitle.text = title
+
+                btnEditRun.setOnClickListener {
+                    val action = HomeFragmentDirections.actionHomeFragmentToUpdateRunSessionFragment(runSession)
+                    findNavController().navigate(action)
+                }
             }
         }
     }

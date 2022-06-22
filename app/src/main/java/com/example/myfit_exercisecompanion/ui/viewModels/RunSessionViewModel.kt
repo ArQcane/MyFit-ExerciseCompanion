@@ -1,5 +1,6 @@
 package com.example.myfit_exercisecompanion.ui.viewModels
 
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.myfit_exercisecompanion.models.RunSession
@@ -96,7 +97,7 @@ class RunSessionViewModel @Inject constructor(
         runSessionRepository.deleteRunSession(runSession)
     }
 
-    fun updateRunSession(runSession: RunSession) = viewModelScope.launch {
-        runSessionRepository.updateRunSession(runSession)
+    fun updateRunSession(email: String, img: Bitmap, runSessionTitle: String, timestamp: Long, avgSpeedInKMH: Float, distanceInMeters: Int, timeInMilis: Long, caloriesBurnt: Int, stepsPerSession: Int, id: Int) = viewModelScope.launch {
+        runSessionRepository.updateRunSession(email, img, runSessionTitle, timestamp, avgSpeedInKMH, distanceInMeters, timeInMilis, caloriesBurnt, stepsPerSession, id)
     }
 }

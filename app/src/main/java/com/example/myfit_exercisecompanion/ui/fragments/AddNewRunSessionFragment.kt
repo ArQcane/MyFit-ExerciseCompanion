@@ -114,7 +114,7 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnPublishRun.setOnClickListener {
+        binding.btnUpdateRun.setOnClickListener {
             if(binding.etTitleRun.text?.isNotEmpty() == true){
                 publishRunToDb()
             }

@@ -1,5 +1,6 @@
 package com.example.myfit_exercisecompanion.repository
 
+import android.graphics.Bitmap
 import com.example.myfit_exercisecompanion.db.RunSessionDAO
 import com.example.myfit_exercisecompanion.models.RunSession
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ class RunSessionRepository @Inject constructor(
         }
     }
 
-    suspend fun updateRunSession(runSession: RunSession) = runSessionDAO.updateRunSession(runSession)
+    suspend fun updateRunSession(email: String, img: Bitmap, runSessionTitle: String, timestamp: Long, avgSpeedInKMH: Float, distanceInMeters: Int, timeInMilis: Long, caloriesBurnt: Int, stepsPerSession: Int, id: Int) = runSessionDAO.updateRunSession(email, img, runSessionTitle, timestamp, avgSpeedInKMH, distanceInMeters, timeInMilis, caloriesBurnt, stepsPerSession, id)
 
     fun getAllRunSessionsSortedByDate(email: String) = runSessionDAO.getAllRunSessionsSortedByDate(email)
 

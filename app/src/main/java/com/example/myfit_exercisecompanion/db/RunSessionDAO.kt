@@ -1,6 +1,7 @@
 package com.example.myfit_exercisecompanion.db
 
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.myfit_exercisecompanion.models.RunSession
@@ -13,8 +14,8 @@ interface RunSessionDAO {
     @Delete
     suspend fun deleteRunSession(runSession: RunSession)
 
-    @Update
-    suspend fun updateRunSession(runSession: RunSession)
+    @Query("UPDATE runsession SET email = :email, img = :img, runSessionTitle = :runSessionTitle, timestamp = :timestamp, avgSpeedInKMH = :avgSpeedInKMH, distanceInMeters = :distanceInMeters, timeInMilis = :timeInMilis, caloriesBurnt = :caloriesBurnt, stepsPerSession = :stepsPerSession WHERE id = :id")
+    suspend fun updateRunSession(email: String, img: Bitmap, runSessionTitle: String, timestamp: Long, avgSpeedInKMH: Float, distanceInMeters: Int, timeInMilis: Long, caloriesBurnt: Int, stepsPerSession: Int, id: Int)
 
     @Query("SELECT * FROM runsession WHERE email = :email ORDER BY timestamp DESC")
     fun getAllRunSessionsSortedByDate(email : String): LiveData<List<RunSession>>

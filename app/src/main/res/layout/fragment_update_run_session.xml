@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:fillViewport="false"
     android:orientation="vertical"
-    tools:context=".ui.fragments.RunSessionDetailsFragment">
+    tools:context=".ui.fragments.AddNewRunSessionFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clContainer"
@@ -205,15 +205,14 @@
             app:layout_constraintTop_toBottomOf="@+id/tvStepsLabel" />
 
         <Button
-            android:id="@+id/btnPublishRun"
+            android:id="@+id/btnUpdateRun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:text="Publish Run"
+            android:layout_marginTop="216dp"
+            android:text="Update Run"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/tvCaloriesBurnt"
-            app:layout_constraintTop_toBottomOf="@+id/tvCaloriesBurnt" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivMapImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
