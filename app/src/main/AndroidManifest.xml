@@ -33,6 +33,9 @@
         <activity
             android:name=".ui.activities.DetailsActivity"
             android:exported="false" />
+        <activity android:name=".ui.activities.ChatActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity"/>
         <activity
             android:name=".ui.activities.ForgetPasswordActivity"
             android:exported="false"

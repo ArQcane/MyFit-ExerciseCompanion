@@ -97,7 +97,7 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
             val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
             tvDate.text = dateFormat.format(calendar)
             CoroutineScope(Dispatchers.Main).launch{
-                tvUsername.text = viewModel.getAuthUser()?.email
+                tvUsername.text = authViewModel.getFirestoreUser()?.username
             }
         }
 

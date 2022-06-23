@@ -1,13 +1,13 @@
 package com.example.myfit_exercisecompanion.ui.fragments
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -19,11 +19,13 @@ import com.example.myfit_exercisecompanion.databinding.FragmentHomeBinding
 import com.example.myfit_exercisecompanion.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.example.myfit_exercisecompanion.other.SortTypes
 import com.example.myfit_exercisecompanion.other.TrackingUtility
+import com.example.myfit_exercisecompanion.ui.activities.ChatActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.PermissionCallbacks {
@@ -36,6 +38,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
 
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,6 +53,22 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
         return view
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.app_bar_home_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_chat -> {
+                val intent = Intent(activity, ChatActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -89,6 +89,8 @@ class AuthViewModel @Inject constructor(
     }
 
     suspend fun getCurrentUser() = listOf(authRepository.getAuthUser(), userRepository.getCurrentUser())
+    fun getFirebaseUser() = authRepository.getAuthUser()
+    suspend fun getFirestoreUser() = userRepository.getCurrentUser()
     fun signOut() = authRepository.signOut()
 
     private fun validateEmailFields(email: String?): Boolean {
