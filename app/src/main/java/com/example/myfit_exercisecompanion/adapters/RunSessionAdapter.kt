@@ -59,7 +59,7 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
                 val distanceInKm = "Distance Travelled: ${runSession.distanceInMeters / 1000f}km"
                 binding.tvDistance.text = distanceInKm
 
-                binding.tvTimeTaken.text = "Time: ${TrackingUtility.getFormattedStopwatchTime(runSession.timeInMilis)}"
+                binding.tvTimeTaken.text = "Time: ${TrackingUtility.getFormattedStopWatchTime(runSession.timeInMilis)}"
 
                 val caloriesBurned = "Calories Burned: ${runSession.caloriesBurnt}kcal"
                 binding.tvCaloriesBurned.text = caloriesBurned

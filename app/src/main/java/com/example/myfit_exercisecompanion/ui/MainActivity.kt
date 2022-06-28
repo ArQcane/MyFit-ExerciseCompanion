@@ -51,9 +51,6 @@ class MainActivity : AppCompatActivity() {
                 else -> View.GONE
             }
         }
-
-
-
     }
 
     override fun onNewIntent(intent: Intent?) {

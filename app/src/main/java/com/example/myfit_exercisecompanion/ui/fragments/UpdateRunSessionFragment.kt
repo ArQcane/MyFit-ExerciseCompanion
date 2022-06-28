@@ -2,11 +2,12 @@ package com.example.myfit_exercisecompanion.ui.fragments
 
 import android.os.Bundle
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -19,8 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 @AndroidEntryPoint
-class UpdateRunSessionFragment : Fragment(R.layout.fragment_update_run_session) {
+class UpdateRunSessionFragment : Fragment(com.example.myfit_exercisecompanion.R.layout.fragment_update_run_session) {
     private val args by navArgs<UpdateRunSessionFragmentArgs>()
 
     private var _binding: FragmentUpdateRunSessionBinding? = null
@@ -54,7 +56,7 @@ class UpdateRunSessionFragment : Fragment(R.layout.fragment_update_run_session) 
         val distanceInKm = "Distance Travelled: ${args.currentRunSession.distanceInMeters / 1000f}km"
         binding.tvDistance.text = distanceInKm
 
-        binding.tvTimeTaken.text = "Time: ${TrackingUtility.getFormattedStopwatchTime(args.currentRunSession.timeInMilis)}"
+        binding.tvTimeTaken.text = "Time: ${TrackingUtility.getFormattedStopWatchTime(args.currentRunSession.timeInMilis)}"
 
         val caloriesBurned = "Calories Burned: ${args.currentRunSession.caloriesBurnt}kcal"
         binding.tvCaloriesBurnt.text = caloriesBurned
@@ -67,6 +69,9 @@ class UpdateRunSessionFragment : Fragment(R.layout.fragment_update_run_session) 
         }
         return view
     }
+
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -86,7 +91,7 @@ class UpdateRunSessionFragment : Fragment(R.layout.fragment_update_run_session) 
         if(inputCheck(runSessionTitle)){
             viewModel.updateRunSession(email!!, img!!, runSessionTitle, timeStamp, avgSpeedInKMH, distanceInMeters, timeInMilis, caloriesBurnt, stepsPerSession, args.currentRunSession.id)
             Toast.makeText(requireContext(), "Updated Successfully", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_updateRunSessionFragment_to_homeFragment)
+            findNavController().navigate(com.example.myfit_exercisecompanion.R.id.action_updateRunSessionFragment_to_homeFragment)
         } else{
             Toast.makeText(requireContext(), "Please fill out all fields.", Toast.LENGTH_SHORT).show()
         }

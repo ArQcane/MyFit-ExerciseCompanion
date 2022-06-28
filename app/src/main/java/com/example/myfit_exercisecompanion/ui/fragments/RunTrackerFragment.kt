@@ -126,7 +126,7 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
 
         TrackingService.timeRunInMilis.observe(viewLifecycleOwner, Observer {
             curTimeInMilis = it
-            val formattedTime = TrackingUtility.getFormattedStopwatchTime(curTimeInMilis)
+            val formattedTime = TrackingUtility.getFormattedStopWatchTime(curTimeInMilis)
             binding.container.tvTimer.text = formattedTime
         })
         TrackingService.liveDistance.observe(viewLifecycleOwner, Observer {

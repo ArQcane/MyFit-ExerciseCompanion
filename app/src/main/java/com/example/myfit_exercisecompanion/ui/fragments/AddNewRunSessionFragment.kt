@@ -89,7 +89,7 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
         binding.apply {
             ivMapImage.setImageResource(R.drawable.ic_baseline_wifi_protected_setup_24)
             tvDistance.text = TrackingUtility.getFormattedLiveDistance(_distance.toFloat() / 1000f)
-            tvTimeTaken.text = TrackingUtility.getFormattedStopwatchTime(timeTaken)
+            tvTimeTaken.text = TrackingUtility.getFormattedStopWatchTime(timeTaken)
             tvAvgSpeed.text = "${avgSpeed}km/h"
             tvCaloriesBurnt.text = "${caloriesBurnt}Kcal"
             tvStepsTaken.text = "${stepsTaken}steps"

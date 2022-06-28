@@ -49,7 +49,7 @@ class CustomMarkerView(
         val distanceInKm = "${runSession.distanceInMeters / 1000f}km"
         binding.tvDistance.text = distanceInKm
 
-        binding.tvDuration.text = TrackingUtility.getFormattedStopwatchTime(runSession.timeInMilis)
+        binding.tvDuration.text = TrackingUtility.getFormattedStopWatchTime(runSession.timeInMilis)
 
         val caloriesBurned = "${runSession.caloriesBurnt}kcal"
         binding.tvCaloriesBurned.text = caloriesBurned

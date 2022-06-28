@@ -44,7 +44,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 import kotlin.math.round
 
 typealias Polyline = MutableList<LatLng>
@@ -238,7 +240,7 @@ class TrackingService : LifecycleService(), SensorEventListener {
         override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
             if(isTracking.value!!) {
-                result?.locations.let { locations ->
+                result.locations.let { locations ->
                     for(location in locations) {
                         addPathPoint(location)
                         Timber.d("NEW LOCATION: ${location.latitude}, ${location.longitude}")
@@ -310,16 +312,27 @@ class TrackingService : LifecycleService(), SensorEventListener {
 
         setupStepCounter()
 
-        timeRunInSeconds.observe(this, Observer { timeRunInSeconds ->
-            liveDistance.observe(this, Observer { liveDistance ->
-                liveCaloriesBurnt.observe(this, Observer { liveCalories ->
-                    if(!serviceKilled){
-                        val notification = currentNotificationBuilder
-                            .setContentText(TrackingUtility.getFormattedStopwatchTime(timeRunInSeconds * 1000L) + " | " + TrackingUtility.getFormattedLiveDistance(liveDistance) + " | ${liveCalories}Kcal" )
-                        notificationManager.notify(NOTIFICATION_ID, notification.build())
-                    }
-                })
-            })
+//        timeRunInSeconds.observe(this, Observer { timeRunInSeconds ->
+//            liveDistance.observe(this, Observer { liveDistance ->
+//                liveCaloriesBurnt.observe(this, Observer { liveCalories ->
+//                    if(!serviceKilled){
+//                        val notification = currentNotificationBuilder
+//                            .setContentText(TrackingUtility.getFormattedStopwatchTime(timeRunInSeconds * 1000L) + " | " + TrackingUtility.getFormattedLiveDistance(liveDistance) + " | ${liveCalories}Kcal" )
+//                        notificationManager.notify(NOTIFICATION_ID, notification.build())
+//                    }
+//                })
+//            })
+//        })
+        timeRunInSeconds.observe(this, Observer {
+            if (!serviceKilled) {
+                val time = TrackingUtility.getFormattedStopWatchTime(it * 1000L)
+                val info = "${liveDistance.value} m | " +
+                        "${caloriesBurnt} kcal"
+                baseNotificationBuilder
+                    .setContentTitle(time)
+                    .setContentText(info)
+                notificationManager.notify(NOTIFICATION_ID, baseNotificationBuilder.build())
+            }
         })
     }
 

@@ -5,7 +5,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--    Run tracker Strings used-->
-    <string name="google_maps_key">AIzaSyDzMNXkQ3CUt7yqy0HbVt685r9YhxGRFEM</string>
+    <string name="google_maps_key"></string>
     <string name="title_activity_maps">Map</string>
     <string name="average_pace_label">Steps</string>
     <string name="elapsed_time_label">Elapsed time</string>

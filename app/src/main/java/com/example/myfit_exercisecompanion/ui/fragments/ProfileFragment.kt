@@ -53,7 +53,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun subscribeToObservers() {
         viewModel.totalTimeRun.observe(viewLifecycleOwner, Observer {
             it?.let {
-                val totalTimeRun = TrackingUtility.getFormattedStopwatchTime(it)
+                val totalTimeRun = TrackingUtility.getFormattedStopWatchTime(it)
                 binding.tvTotalTime.text = totalTimeRun
             }
         })
