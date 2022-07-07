@@ -1,8 +1,12 @@
 package com.example.myfit_exercisecompanion.repository
 
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.sign
 
 
 @Singleton

@@ -1,5 +1,7 @@
 package com.example.myfit_exercisecompanion.ui.viewModels
 
+import android.net.Uri
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +20,6 @@ class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository
 ) : ViewModel(){
-
     private val _authState = MutableLiveData<AuthState>(AuthState.Idle)
     val authState: LiveData<AuthState>
         get() = _authState
@@ -29,6 +30,7 @@ class AuthViewModel @Inject constructor(
     var username: String? = null
     var weight: String? = null
     var height: String? = null
+    var uri: Uri? = null
 
     fun logIn() {
         val emailCheck = !validateEmailFields(email)
@@ -71,16 +73,44 @@ class AuthViewModel @Inject constructor(
         val checkingWeight = !checkWeight(weight)
         val checkingHeight = !checkHeight(height)
         if(checkingUsername || checkingWeight || checkingHeight) return
-        val user = User(username!!, authRepository.getAuthUser()!!.email!!, height!!.toDouble() / 100, weight!!.toDouble())
+        val user = User(username!!, authRepository.getAuthUser()!!.email!!, height!!.toDouble() / 100, weight!!.toDouble(), uri.toString())
         _authState.value = (AuthState.Loading)
         viewModelScope.launch {
-            if(userRepository.addUser(user)){
+            if(userRepository.addUser(user, uri)){
                 return@launch _authState.postValue(AuthState.Success)
             }
             _authState.postValue(AuthState.FireBaseFailure())
         }
     }
 
+    fun updateUser() {
+        val checkUsername = !checkUsername(username)
+        val checkWeight = !checkWeight(weight)
+        val checkHeight = !checkHeight(height)
+        if (checkUsername || checkWeight || checkHeight) return
+        val hashMap = HashMap<String, Any>()
+        _authState.value = (AuthState.Loading)
+        viewModelScope.launch {
+            val currentUser = userRepository.getCurrentUser()
+            if (username != currentUser!!.username)
+                hashMap["username"] = username!!
+            if (height != (currentUser.heightInMetres * 100).toString())
+                hashMap["heightInCentimetres"] = height!!.toDouble()
+            if (weight != currentUser.weightInKilograms.toString())
+                hashMap["weightInKilograms"] = weight!!.toDouble()
+            if (hashMap.isEmpty() && uri == null)
+                return@launch _authState.postValue(AuthState.FireBaseFailure("No data has been changed!"))
+            if (userRepository.updateUser(hashMap, uri))
+                return@launch _authState.postValue(AuthState.Success)
+            _authState.postValue(AuthState.FireBaseFailure())
+        }
+    }
+
+    fun deleteUserFromFirestoreDb(email: String){
+        viewModelScope.launch {
+            userRepository.deleteUser(email)
+        }
+    }
     fun sendPasswordResetLinkToEmail() {
         if (!validateEmailFields(email)) return
         _authState.postValue(AuthState.Loading)

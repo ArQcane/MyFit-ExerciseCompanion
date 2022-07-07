@@ -14,8 +14,10 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentUpdateRunSessionBinding
+import com.example.myfit_exercisecompanion.models.User
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,6 +33,8 @@ class UpdateRunSessionFragment : Fragment(com.example.myfit_exercisecompanion.R.
 
     private val viewModel: RunSessionViewModel by viewModels()
 
+    private var user: User? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +45,6 @@ class UpdateRunSessionFragment : Fragment(com.example.myfit_exercisecompanion.R.
         val view = binding.root
 
         binding.tilRunTitle.editText?.setText(args.currentRunSession.runSessionTitle)
-        binding.tvUsername.text = args.currentRunSession.email
         val calendar = Calendar.getInstance().apply {
             timeInMillis = args.currentRunSession.timestamp
         }
@@ -63,10 +66,17 @@ class UpdateRunSessionFragment : Fragment(com.example.myfit_exercisecompanion.R.
 
         val stepsTaken = "${args.currentRunSession.stepsPerSession} steps"
         binding.tvStepsTaken.text = stepsTaken
-
+        viewModel.user.observe(viewLifecycleOwner){
+            user = it
+            binding.tvUsername.text = user!!.username
+            user!!.profilePic.let { profilePic ->
+                Picasso.with(requireContext()).load(profilePic).into(binding.ivProfilePicture)
+            }
+        }
         binding.btnUpdateRun.setOnClickListener {
             updateItem()
         }
+
         return view
     }
 
@@ -99,6 +109,11 @@ class UpdateRunSessionFragment : Fragment(com.example.myfit_exercisecompanion.R.
 
     private fun inputCheck(title: String): Boolean{
         return !(TextUtils.isEmpty(title))
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getCurrentUser()
     }
 
 }

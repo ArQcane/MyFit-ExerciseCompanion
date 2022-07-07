@@ -35,7 +35,14 @@ class RunSessionViewModel @Inject constructor(
 
     var sortTypes = SortTypes.DATE
 
+    fun getCurrentUser() {
+        viewModelScope.launch {
+            _userLoggedIn.postValue(userRepository.getCurrentUser())
+        }
+    }
+
     init {
+        getCurrentUser()
         getAuthUser()?.email?.let { user ->
             runs.addSource(runsSortedByDate) { result ->
                 if (sortTypes == SortTypes.DATE) {

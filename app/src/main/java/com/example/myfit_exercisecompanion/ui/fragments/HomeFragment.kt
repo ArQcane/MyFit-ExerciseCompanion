@@ -135,6 +135,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
         ItemTouchHelper(itemTouchHelperCallback).apply {
             attachToRecyclerView(binding.rvRuns)
         }
+        viewModel.getCurrentUser()
     }
 
 

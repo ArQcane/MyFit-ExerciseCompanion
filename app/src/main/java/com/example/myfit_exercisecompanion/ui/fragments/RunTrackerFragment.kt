@@ -109,8 +109,7 @@ class RunTrackerFragment : Fragment(R.layout.fragment_run_tracker) {
             }
             subscribeToObservers()
         }
-
-
+        viewModel.getCurrentUser()
     }
 
     private fun subscribeToObservers() {

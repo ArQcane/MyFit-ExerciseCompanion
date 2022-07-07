@@ -1,5 +1,6 @@
 package com.example.myfit_exercisecompanion.repository
 
+import android.net.Uri
 import com.example.myfit_exercisecompanion.db.UserDao
 import com.example.myfit_exercisecompanion.models.User
 import kotlinx.coroutines.Dispatchers
@@ -12,13 +13,13 @@ class UserRepository @Inject constructor(
     suspend fun getCurrentUser() = withContext(Dispatchers.IO){
         userDao.getUser()
     }
-    suspend fun addUser(user: User) = withContext(Dispatchers.IO){
-        userDao.insertUser(user)
+    suspend fun addUser(user: User, uri: Uri? = null) = withContext(Dispatchers.IO){
+        userDao.insertUser(user,uri)
     }
     suspend fun deleteUser(email: String) = withContext(Dispatchers.IO){
         userDao.deleteUser(email)
     }
-    suspend fun updateUser(map: Map<String, Any>) = withContext(Dispatchers.IO){
-        userDao.updateUser(map)
+    suspend fun updateUser(map: Map<String, Any>, uri: Uri? = null) = withContext(Dispatchers.IO){
+        userDao.updateUser(map, uri)
     }
 }

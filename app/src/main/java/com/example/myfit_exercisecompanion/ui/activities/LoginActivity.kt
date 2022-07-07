@@ -125,10 +125,12 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(this)
                     finish()
                 }
-            Intent(this@LoginActivity, MainActivity::class.java).run {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(this)
-                finish()
+            if(list[1] != null){
+                Intent(this@LoginActivity, MainActivity::class.java).run {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(this)
+                    finish()
+                }
             }
         }
     }

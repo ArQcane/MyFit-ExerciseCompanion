@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentAddNewRunSessionBinding
 import com.example.myfit_exercisecompanion.models.RunSession
+import com.example.myfit_exercisecompanion.models.User
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_STOP_SERVICE
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.services.TrackingService
@@ -21,6 +22,7 @@ import com.example.myfit_exercisecompanion.ui.activities.DetailsActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -55,6 +57,8 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
     private val dateTimeStamp = Calendar.getInstance().timeInMillis
 
     private var email = ""
+
+    private var user: User? = null
 
 
     override fun onCreateView(
@@ -124,16 +128,21 @@ class AddNewRunSessionFragment : Fragment(R.layout.fragment_add_new_run_session)
         }
 
         viewModel.user.observe(viewLifecycleOwner) {
+            user = it
             it ?: return@observe run {
                 Intent(requireContext(), DetailsActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     requireActivity().startActivity(this)
                 }
             }
+            user!!.profilePic.let { profilePic ->
+                Picasso.with(requireContext()).load(profilePic).into(binding.ivProfilePicture)
+            }
             weight = it.weightInKilograms
         }
         viewModel.getAuthUser()?.let { email = it.email!! }
         viewModel.getAuthUser()
+        viewModel.getCurrentUser()
     }
 
     private fun publishRunToDb(){

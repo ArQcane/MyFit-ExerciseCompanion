@@ -12,6 +12,8 @@ import javax.inject.Singleton
 class RunSessionRepository @Inject constructor(
     val runSessionDAO: RunSessionDAO
 ){
+
+
     suspend fun insertRunSession(runSession : RunSession) {
         withContext(Dispatchers.IO){
             runSessionDAO.insertRunSession(runSession)
