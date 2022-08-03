@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.ActivityMainBinding
@@ -19,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
     @Inject
     lateinit var runSessionDao: RunSessionDAO
 
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
 
         navigateToTrackingFragmentIfNeeded(intent)
 
@@ -63,4 +68,5 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.action_global_trackingFragment)
         }
     }
+
 }

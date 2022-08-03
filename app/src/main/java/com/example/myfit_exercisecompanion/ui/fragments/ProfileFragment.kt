@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -114,9 +115,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         })
         viewModel.user.observe(viewLifecycleOwner){
             user = it
-            binding.tvProfileName.text = user!!.username
-            binding.tvEmailId.text = user!!.email
-            user!!.profilePic.let { profilePic ->
+            Log.d("user value2:", it.toString())
+            binding.tvProfileName.text = user?.username
+            binding.tvEmailId.text = user?.email
+            user?.profilePic.let { profilePic ->
                 Picasso.with(requireContext()).load(profilePic).into(binding.profileImage)
             }
         }
@@ -143,6 +145,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.btnDeleteProfile.setOnClickListener {
             showDeleteAccountAlertDialog(requireContext())
         }
+        Log.d("user value:" ,user.toString())
         viewModel.getCurrentUser()
     }
 

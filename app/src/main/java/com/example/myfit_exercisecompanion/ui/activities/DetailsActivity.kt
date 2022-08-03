@@ -114,7 +114,7 @@ class DetailsActivity : AppCompatActivity() {
                 }
             }
         }
-        viewModel.user.observe(this){
+        viewModel.user.observe(this) {
             user = it
             it ?: return@observe
             user!!.profilePic?.let { profilePic ->

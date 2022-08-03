@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="saved_calorie_goal_default_key">2500</integer>
+    <integer name="saved_protein_goal_default_key">140</integer>
+    <integer name="saved_carbs_goal_default_key">150</integer>
+    <integer name="saved_fat_goal_default_key">160</integer>
+</resources>

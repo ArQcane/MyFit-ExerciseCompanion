@@ -6,6 +6,8 @@ object Constants {
 
     const val RUNNING_DATABASE_NAME = "myfit_db"
 
+    const val FOOD_DATABASE_NAME = "food_db"
+
     const val REQUEST_CODE_LOCATION_PERMISSION = 0
 
     const val ACTION_START_OR_RESUME_SERVICE = "ACTION_START_OR_RESUME_SERVICE"
