@@ -12,7 +12,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.myfit_exercisecompanion.ui.fragments.HomeFragment"
-        android:label="fragment_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_runTrackerFragment"
@@ -20,11 +20,14 @@
         <action
             android:id="@+id/action_homeFragment_to_updateRunSessionFragment"
             app:destination="@id/updateRunSessionFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_runsListFragment"
+            app:destination="@id/runsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/runTrackerFragment"
         android:name="com.example.myfit_exercisecompanion.ui.fragments.RunTrackerFragment"
-        android:label="fragment_run_tracker"
+        android:label="Run Tracker"
         tools:layout="@layout/fragment_run_tracker" >
         <action
             android:id="@+id/action_runTrackerFragment_to_calorieCounterFragment"
@@ -40,7 +43,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.myfit_exercisecompanion.ui.fragments.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="Profile"
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_homeFragment"
@@ -55,7 +58,7 @@
     <fragment
         android:id="@+id/addNewRunSessionFragment"
         android:name="com.example.myfit_exercisecompanion.ui.fragments.AddNewRunSessionFragment"
-        android:label="fragment_add_new_run_session"
+        android:label="Add new run"
         tools:layout="@layout/fragment_add_new_run_session" >
         <action
             android:id="@+id/action_addNewRunSessionFragment_to_runTrackerFragment"
@@ -89,7 +92,7 @@
     <fragment
         android:id="@+id/updateRunSessionFragment"
         android:name="com.example.myfit_exercisecompanion.ui.fragments.UpdateRunSessionFragment"
-        android:label="Update"
+        android:label="Update Run"
         tools:layout="@layout/fragment_update_run_session" >
         <action
             android:id="@+id/action_updateRunSessionFragment_to_homeFragment"
@@ -101,7 +104,7 @@
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.myfit_exercisecompanion.ui.fragments.EditProfileFragment"
-        android:label="fragment_edit_profile"
+        android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" >
         <action
             android:id="@+id/action_editProfileFragment_to_profileFragment"
@@ -115,7 +118,7 @@
     <fragment
         android:id="@+id/calorieCounterFragment"
         android:name="com.example.myfit_exercisecompanion.ui.fragments.CalorieCounterFragment"
-        android:label="fragment_calorie_counter"
+        android:label="Calorie Counter"
         tools:layout="@layout/fragment_calorie_counter" >
         <action
             android:id="@+id/action_calorieCounterFragment_to_profileFragment"
@@ -186,5 +189,13 @@
         <action
             android:id="@+id/action_createFoodFragment_to_searchFoodFragment"
             app:destination="@id/searchFoodFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/runsListFragment"
+        android:name="com.example.myfit_exercisecompanion.ui.fragments.RunsListFragment"
+        android:label="RunsListFragment" >
+        <action
+            android:id="@+id/action_runsListFragment_to_updateRunSessionFragment"
+            app:destination="@id/updateRunSessionFragment" />
     </fragment>
 </navigation>

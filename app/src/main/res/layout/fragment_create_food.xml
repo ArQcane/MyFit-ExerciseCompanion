@@ -170,7 +170,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnCancel"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

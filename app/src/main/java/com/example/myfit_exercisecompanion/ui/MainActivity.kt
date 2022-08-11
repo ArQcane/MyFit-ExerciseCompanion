@@ -7,6 +7,7 @@ import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myfit_exercisecompanion.R
@@ -37,9 +38,13 @@ class MainActivity : AppCompatActivity() {
 
 
         navigateToTrackingFragmentIfNeeded(intent)
+        appBarConfiguration = AppBarConfiguration(
+            topLevelDestinationIds = setOf(R.id.homeFragment, R.id.runTrackerFragment, R.id.calorieCounterFragment, R.id.profileFragment))
+
 
 
         navController = findNavController(R.id.navHostFragment)
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
         navigateToTrackingFragmentIfNeeded(intent)
 
@@ -67,6 +72,9 @@ class MainActivity : AppCompatActivity() {
         if(intent?.action == ACTION_SHOW_TRACKING_FRAGMENT){
             navController.navigate(R.id.action_global_trackingFragment)
         }
+    }
+    override fun onSupportNavigateUp(): Boolean { // back button
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
 }

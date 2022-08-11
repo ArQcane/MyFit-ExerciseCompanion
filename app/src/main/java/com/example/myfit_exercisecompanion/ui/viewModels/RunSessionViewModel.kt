@@ -3,6 +3,7 @@ package com.example.myfit_exercisecompanion.ui.viewModels
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.myfit_exercisecompanion.db.FoodDao
 import com.example.myfit_exercisecompanion.models.RunSession
 import com.example.myfit_exercisecompanion.models.User
 import com.example.myfit_exercisecompanion.other.SortTypes
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class RunSessionViewModel @Inject constructor(
     private val runSessionRepository: RunSessionRepository,
     private val userRepository: UserRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val foodDao: FoodDao,
 ): ViewModel() {
     private val _userLoggedIn = MutableLiveData<User?>()
     val user: LiveData<User?>
@@ -102,7 +104,18 @@ class RunSessionViewModel @Inject constructor(
         runSessionRepository.deleteRunSession(runSession)
     }
 
+    fun deleteAllRuns(email: String) {
+        viewModelScope.launch {
+            runSessionRepository.deleteAllRuns(email)
+        }
+    }
+
     fun updateRunSession(email: String, img: Bitmap, runSessionTitle: String, timestamp: Long, avgSpeedInKMH: Float, distanceInMeters: Int, timeInMilis: Long, caloriesBurnt: Int, stepsPerSession: Int, id: Int) = viewModelScope.launch {
         runSessionRepository.updateRunSession(email, img, runSessionTitle, timestamp, avgSpeedInKMH, distanceInMeters, timeInMilis, caloriesBurnt, stepsPerSession, id)
+    }
+    fun deleteAllFoodItems(email: String){
+        viewModelScope.launch {
+            foodDao.deleteAllItems(email)
+        }
     }
 }

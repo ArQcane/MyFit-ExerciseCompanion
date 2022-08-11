@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myfit_exercisecompanion.databinding.ItemRunSessionBinding
+import com.example.myfit_exercisecompanion.databinding.ItemRunSessionHomeBinding
 import com.example.myfit_exercisecompanion.models.RunSession
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.ui.fragments.HomeFragmentDirections
-import com.example.myfit_exercisecompanion.ui.fragments.RunsListFragmentDirections
 import kotlinx.android.synthetic.main.item_run_session.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewHolder>(){
+class HomeRunAdapter : RecyclerView.Adapter<HomeRunAdapter.HomeRunViewHolder>(){
 
-    inner class RunSessionViewHolder(val binding: ItemRunSessionBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class HomeRunViewHolder(val binding: ItemRunSessionHomeBinding) : RecyclerView.ViewHolder(binding.root){
     }
 
     val diffCallback = object : DiffUtil.ItemCallback<RunSession>() {
@@ -36,12 +36,12 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
     fun submitList(list: List<RunSession>) = differ.submitList(list)
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunSessionViewHolder {
-        val binding = ItemRunSessionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RunSessionViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeRunAdapter.HomeRunViewHolder {
+        val binding = ItemRunSessionHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return HomeRunViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RunSessionViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeRunAdapter.HomeRunViewHolder, position: Int) {
         val runSession = differ.currentList[position]
 
         with(holder){
@@ -72,7 +72,7 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
                 binding.tvRunTitle.text = title
 
                 btnEditRun.setOnClickListener {
-                    val action = RunsListFragmentDirections.actionRunsListFragmentToUpdateRunSessionFragment(runSession)
+                    val action = HomeFragmentDirections.actionHomeFragmentToUpdateRunSessionFragment(runSession)
                     findNavController().navigate(action)
                 }
             }
@@ -80,6 +80,9 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        if(differ.currentList.size > 0){
+            return 1
+        }
+        else return differ.currentList.size
     }
 }

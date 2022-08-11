@@ -26,11 +26,14 @@
         <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/fragment_run_session_details.xml" value="0.17291666666666666" />
         <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/fragment_run_tracker.xml" value="0.25" />
+        <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/fragment_runs_list.xml" value="0.26811594202898553" />
         <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/fragment_search_food.xml" value="0.35" />
         <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/fragment_update_run_session.xml" value="0.35" />
         <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/item_banana_search.xml" value="0.35" />
         <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/item_food.xml" value="0.20208333333333334" />
+        <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/item_food_search.xml" value="0.1702127659574468" />
         <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/item_run_session.xml" value="0.33" />
+        <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/item_run_session_home.xml" value="0.5" />
         <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/layout_indicators.xml" value="0.5" />
         <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/layout/marker_view.xml" value="0.35" />
         <entry key="..\:/Android Studio projects/MyFitExerciseCompanion/app/src/main/res/menu/app_bar_home_menu.xml" value="0.35" />

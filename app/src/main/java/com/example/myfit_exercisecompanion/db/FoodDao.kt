@@ -16,6 +16,9 @@ interface FoodDao {
     @Query("UPDATE foods SET consumed = :isConsumed WHERE id = :id")
     suspend fun update(isConsumed: Boolean, id: Int)
 
+    @Query("DELETE FROM foods where email = :email")
+    suspend fun deleteAllItems(email: String)
+
     @Query("SELECT * from foods where category = :category and email = :email order by id")   // order by add date?
     fun getFoodList(category: String, email: String): Flow<List<FoodItem>>
 

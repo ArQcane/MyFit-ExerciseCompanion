@@ -64,7 +64,17 @@ class DetailsActivity : AppCompatActivity() {
             )
         }
         binding.btnSubmit.setOnClickListener {
-            authViewModel.insertUserIntoFirestore()
+            if(authViewModel.uri == null){
+                Snackbar.make(
+                    binding.root,
+                    "Please add a profile picture",
+                    Snackbar.LENGTH_SHORT
+                ).apply {
+                    setAction("OKAY") { dismiss() }
+                    show()
+                }
+            }
+            else authViewModel.insertUserIntoFirestore()
         }
     }
 
@@ -114,7 +124,7 @@ class DetailsActivity : AppCompatActivity() {
                 }
             }
         }
-        viewModel.user.observe(this) {
+        viewModel.user.observe(this){
             user = it
             it ?: return@observe
             user!!.profilePic?.let { profilePic ->
@@ -130,6 +140,17 @@ class DetailsActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (data == null) {
+            Snackbar.make(
+                binding.root,
+                "Please add a profile picture",
+                Snackbar.LENGTH_SHORT
+            ).apply {
+                setAction("OKAY") { dismiss() }
+                show()
+            }
+            return;
+        }
         if (requestCode == REQUEST_CODE_CHOOSE_PROFILE_PICTURE &&
             resultCode == Activity.RESULT_OK &&
             data != null &&

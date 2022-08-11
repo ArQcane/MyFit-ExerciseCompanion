@@ -52,33 +52,24 @@
 
                     <!-- Title, secondary and supporting text -->
 
+
                     <TextView
                         android:id="@+id/tvProfileName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="76dp"
+                        android:layout_marginTop="4dp"
                         android:text="Sample Title"
                         android:textAppearance="?attr/textAppearanceHeadline6"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/btnLogout" />
-
-                    <Button
-                        android:id="@+id/btnLogout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Logout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.949"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.232"
+                        app:layout_constraintStart_toEndOf="@+id/imageContainer"
                         app:layout_constraintTop_toTopOf="parent" />
-
 
                     <TextView
                         android:id="@+id/tvEmailId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        app:layout_constraintEnd_toStartOf="@+id/btnLogout"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tvProfileName"
                         app:layout_constraintTop_toBottomOf="@+id/tvProfileName"
@@ -88,181 +79,63 @@
                         android:id="@+id/tvUserId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/btnLogout"
-                        app:layout_constraintEnd_toStartOf="@+id/btnLogout"
-                        app:layout_constraintHorizontal_bias="0.1"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tvEmailId"
                         app:layout_constraintTop_toBottomOf="@+id/tvEmailId"
+                        app:layout_constraintVertical_bias="0.058"
                         tools:text="123456789" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- Buttons -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnEditProfile"
-                        style="?attr/borderlessButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:text="Edit Profile" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnDeleteProfile"
-                        style="?attr/borderlessButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Delete Profile" />
-                </LinearLayout>
-
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginTop="32dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileCard">
+            app:layout_constraintTop_toBottomOf="@+id/profileCard"
+            app:layout_constraintVertical_bias="1.0">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTotalDistanceInfo"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnLogout"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
-                android:text="Total Distance"
-                app:layout_constraintEnd_toEndOf="@+id/tvTotalDistance"
-                app:layout_constraintStart_toStartOf="@+id/tvTotalDistance"
-                app:layout_constraintTop_toBottomOf="@+id/tvTotalDistance" />
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="Logout"
+                app:icon="@drawable/ic_baseline_logout_24" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTotalDistance"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnEditProfile"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
-                android:text="0km"
-                android:textSize="40sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.456"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="Edit Profile"
+                app:icon="@drawable/ic_baseline_edit_24" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTotalStepsInfo"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnDeleteProfile"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
-                android:text="Total Steps Taken"
-                app:layout_constraintEnd_toEndOf="@+id/tvTotalSteps"
-                app:layout_constraintStart_toStartOf="@+id/tvTotalSteps"
-                app:layout_constraintTop_toBottomOf="@+id/tvTotalSteps" />
+                android:text="Delete Profile"
+                app:icon="@drawable/ic_baseline_delete_sweep_24" />
+        </LinearLayout>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTotalSteps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="0"
-                android:textSize="40sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/tvTotalDistanceInfo" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTotalTimeInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total Time"
-                app:layout_constraintBottom_toTopOf="@+id/tvTotalCaloriesInfo"
-                app:layout_constraintEnd_toEndOf="@+id/tvTotalTime"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/tvTotalTime"
-                app:layout_constraintTop_toBottomOf="@+id/tvTotalTime"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTotalTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00:00:00"
-                android:textSize="40sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTotalCaloriesInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total Calories Burned"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTotalCalories" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTotalCalories"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="0kcal"
-                android:textSize="40sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTotalTimeInfo" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvAverageSpeedInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Average Speed"
-                app:layout_constraintEnd_toEndOf="@+id/tvAverageSpeed"
-                app:layout_constraintStart_toStartOf="@+id/tvAverageSpeed"
-                app:layout_constraintTop_toBottomOf="@+id/tvAverageSpeed" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvAverageSpeed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="0km/h"
-                android:textSize="40sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTotalStepsInfo" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.7017784" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
-
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/barChart"
-                android:layout_width="match_parent"
-                android:layout_height="450dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvAverageSpeedInfo" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 </ScrollView>

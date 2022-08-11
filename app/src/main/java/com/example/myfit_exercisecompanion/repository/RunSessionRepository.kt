@@ -26,6 +26,12 @@ class RunSessionRepository @Inject constructor(
         }
     }
 
+    suspend fun deleteAllRuns(email: String) {
+        withContext(Dispatchers.IO) {
+            runSessionDAO.deleteAllRuns(email)
+        }
+    }
+
     suspend fun updateRunSession(email: String, img: Bitmap, runSessionTitle: String, timestamp: Long, avgSpeedInKMH: Float, distanceInMeters: Int, timeInMilis: Long, caloriesBurnt: Int, stepsPerSession: Int, id: Int) = runSessionDAO.updateRunSession(email, img, runSessionTitle, timestamp, avgSpeedInKMH, distanceInMeters, timeInMilis, caloriesBurnt, stepsPerSession, id)
 
     fun getAllRunSessionsSortedByDate(email: String) = runSessionDAO.getAllRunSessionsSortedByDate(email)

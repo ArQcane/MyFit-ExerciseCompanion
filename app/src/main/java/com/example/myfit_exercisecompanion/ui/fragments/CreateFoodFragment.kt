@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentCreateFoodBinding
@@ -43,6 +44,9 @@ class CreateFoodFragment : Fragment(R.layout.fragment_create_food) {
 
         binding.apply {
             btnCreate.setOnClickListener { createFood() }
+            btnCancel.setOnClickListener {
+                
+            }
         }
     }
 
@@ -74,7 +78,14 @@ class CreateFoodFragment : Fragment(R.layout.fragment_create_food) {
         }
     }
 
-    fun isEntryValid(email: String, name: String, calories: String, protein: String, carbs: String, fat: String): Boolean {
+    fun isEntryValid(
+        email: String,
+        name: String,
+        calories: String,
+        protein: String,
+        carbs: String,
+        fat: String
+    ): Boolean {
         if (email.isBlank() || name.isBlank() || calories.isBlank() || protein.isBlank() || carbs.isBlank() || fat.isBlank()) {
             return false
         }
