@@ -57,15 +57,15 @@ class HomeRunAdapter : RecyclerView.Adapter<HomeRunAdapter.HomeRunViewHolder>(){
                 val avgSpeed = "Pace: ${runSession.avgSpeedInKMH}km/h"
                 binding.tvAverageSpeed.text = avgSpeed
 
-                val distanceInKm = "Distance Travelled: ${runSession.distanceInMeters / 1000f}km"
+                val distanceInKm = "Distance Ran: ${runSession.distanceInMeters / 1000f}km"
                 binding.tvDistance.text = distanceInKm
 
                 binding.tvTimeTaken.text = "Time: ${TrackingUtility.getFormattedStopWatchTime(runSession.timeInMilis)}"
 
-                val caloriesBurned = "Calories Burned: ${runSession.caloriesBurnt}kcal"
+                val caloriesBurned = "Calorie Burnt: ${runSession.caloriesBurnt}kcal"
                 binding.tvCaloriesBurned.text = caloriesBurned
 
-                val stepsTaken = "${runSession.stepsPerSession} steps"
+                val stepsTaken = "Steps Taken: ${runSession.stepsPerSession}"
                 binding.tvStepsTaken.text = stepsTaken
 
                 val title = "${runSession.runSessionTitle}"
