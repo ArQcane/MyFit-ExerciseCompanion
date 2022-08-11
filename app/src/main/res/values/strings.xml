@@ -21,4 +21,15 @@
         <item>Calories Burned</item>
         <item>Steps Taken</item>
     </string-array>
+    <string name="unit_quantity">%1$s %2$s</string>
+    <string name="food_id">#%1$s</string>
+    <string name="calorie_calc">%1$s %2$s x %3$skcal</string>
+    <string name="macro">%1$sg</string>
+    <string name="units_macro">%1$sg %2$s</string>
+    <string name="macro_detailed">%1$sg / %2$sg / %3$sg</string>
+    <string name="saved_calorie_goal_key">CALORIE_GOAL_KEY</string>
+    <string name="saved_protein_goal_key">PROTEIN_GOAL_KEY</string>
+    <string name="saved_carbs_goal_key">CARBS_GOAL_KEY</string>
+    <string name="saved_fat_goal_key">FAT_GOAL_KEY</string>
+    <string name="carbs_key">205</string>
 </resources>

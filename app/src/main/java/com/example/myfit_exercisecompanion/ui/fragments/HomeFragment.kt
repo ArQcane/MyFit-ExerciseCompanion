@@ -1,30 +1,39 @@
 package com.example.myfit_exercisecompanion.ui.fragments
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import android.widget.AdapterView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfit_exercisecompanion.R
-import com.example.myfit_exercisecompanion.adapters.RunSessionAdapter
+import com.example.myfit_exercisecompanion.adapters.HomeRunAdapter
 import com.example.myfit_exercisecompanion.databinding.FragmentHomeBinding
+import com.example.myfit_exercisecompanion.models.User
 import com.example.myfit_exercisecompanion.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
-import com.example.myfit_exercisecompanion.other.SortTypes
+import com.example.myfit_exercisecompanion.other.CustomMarkerView
 import com.example.myfit_exercisecompanion.other.TrackingUtility
-import com.example.myfit_exercisecompanion.ui.activities.ChatActivity
+import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
+import com.example.myfit_exercisecompanion.ui.viewModels.StatisticsViewModel
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import kotlin.math.round
 
 
 @AndroidEntryPoint
@@ -32,11 +41,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
 
     private val viewModel: RunSessionViewModel by viewModels()
 
-    private lateinit var runAdapter: RunSessionAdapter
+    private lateinit var runAdapter: HomeRunAdapter
 
     private var _binding: FragmentHomeBinding? = null
 
     private val binding get() = _binding!!
+
+    private val statisticsViewModel: StatisticsViewModel by viewModels()
+
+    private val authViewModel: AuthViewModel by viewModels()
+
+    private var user: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,21 +69,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.app_bar_home_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_chat -> {
-                val intent = Intent(activity, ChatActivity::class.java)
-                startActivity(intent)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -79,29 +79,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
         super.onViewCreated(view, savedInstanceState)
         requestPermissions()
         setupRecyclerView()
+        subscribeToObservers()
+        setupBarChart()
 
-        when(viewModel.sortTypes){
-            SortTypes.DATE -> binding.spFilter.setSelection(0)
-            SortTypes.RUNNING_TIME -> binding.spFilter.setSelection(1)
-            SortTypes.DISTANCE -> binding.spFilter.setSelection(2)
-            SortTypes.AVG_SPEED -> binding.spFilter.setSelection(3)
-            SortTypes.CALORIES_BURNT -> binding.spFilter.setSelection(4)
-            SortTypes.STEPS_TAKEN -> binding.spFilter.setSelection(5)
-        }
-
-        binding.spFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                when(position){
-                    0 -> viewModel.sortRuns(SortTypes.DATE)
-                    1 -> viewModel.sortRuns(SortTypes.RUNNING_TIME)
-                    2 -> viewModel.sortRuns(SortTypes.DISTANCE)
-                    3 -> viewModel.sortRuns(SortTypes.AVG_SPEED)
-                    4 -> viewModel.sortRuns(SortTypes.CALORIES_BURNT)
-                    5 -> viewModel.sortRuns(SortTypes.STEPS_TAKEN)
-                }
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        binding.btnRunsList.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_runsListFragment)
         }
 
         viewModel.runs.observe(viewLifecycleOwner, Observer {
@@ -141,8 +123,20 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
 
 
     private fun setupRecyclerView() = binding.rvRuns.apply {
-        runAdapter = RunSessionAdapter()
+        runAdapter = HomeRunAdapter()
         adapter = runAdapter
+        viewModel.runs.observe(viewLifecycleOwner, Observer {
+            if(it.size != 0){
+                binding.rvRuns.visibility = View.VISIBLE
+                binding.tvEmpty.visibility = View.GONE
+                binding.ivEmpty.visibility = View.GONE
+            }
+            else{
+                binding.rvRuns.visibility = View.INVISIBLE
+                binding.ivEmpty.visibility = View.VISIBLE
+                binding.ivEmpty.visibility = View.VISIBLE
+            }
+        })
         layoutManager = LinearLayoutManager(requireContext())
     }
 
@@ -180,7 +174,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
             requestPermissions()
         }
     }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -188,5 +181,81 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    private fun subscribeToObservers() {
+        statisticsViewModel.totalTimeRun.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val totalTimeRun = TrackingUtility.getFormattedStopWatchTime(it)
+                binding.tvTotalTime.text = totalTimeRun
+            }
+        })
+        statisticsViewModel.totalDistance.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val km = it / 1000f
+                val totalDistance = round(km * 10f) / 10f
+                val totalDistanceString = "${totalDistance}km"
+                binding.tvTotalDistance.text = totalDistanceString
+            }
+        })
+        statisticsViewModel.totalAvgSpeed.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val avgSpeed = round(it * 10f) / 10f
+                val avgSpeedString = "${avgSpeed}km/h"
+                binding.tvAverageSpeed.text = avgSpeedString
+            }
+        })
+        statisticsViewModel.totalCaloriesBurned.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                val totalCalories = "${it}kcal"
+                binding.tvTotalCalories.text = totalCalories
+            }
+        })
+        statisticsViewModel.totalStepsTaken.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                val totalStepsTaken = "${it}steps"
+                binding.tvTotalSteps.text = totalStepsTaken
+            }
+        })
+        statisticsViewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val allAvgSpeeds = it.indices.map { i -> BarEntry(i.toFloat(), it[i].avgSpeedInKMH) }
+                val barDataSet = BarDataSet(allAvgSpeeds, "Avg Speed Over Time").apply {
+                    valueTextColor = Color.BLUE
+                    valueTextSize = 24.0f
+                    color = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+                }
+                binding.barChart.data = BarData(barDataSet)
+                binding.barChart.marker = CustomMarkerView(it.reversed(), requireContext(), R.layout.marker_view)
+                binding.barChart.invalidate()
+            }
+        })
+    }
+    private fun setupBarChart(){
+        binding.barChart.xAxis.apply {
+            position = XAxis.XAxisPosition.BOTTOM
+            setDrawLabels(false)
+            axisLineColor = Color.GREEN
+            textColor = Color.GREEN
+            gridColor = Color.parseColor("#FF7F3F")
+            setDrawGridLines(true)
+        }
+        binding.barChart.axisLeft.apply {
+            axisLineColor = Color.DKGRAY
+            textColor = Color.DKGRAY
+            gridColor = Color.parseColor("#FF7F3F")
+            setDrawGridLines(true)
+        }
+        binding.barChart.axisRight.apply {
+            axisLineColor = Color.DKGRAY
+            textColor = Color.DKGRAY
+            gridColor = Color.parseColor("#FF7F3F")
+            setDrawGridLines(true)
+        }
+        binding.barChart.apply {
+            description.text = "Avg Speed Over Time"
+            description.textSize = 20.0f
+            legend.isEnabled = false
+        }
     }
 }

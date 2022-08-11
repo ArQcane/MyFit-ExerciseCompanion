@@ -14,6 +14,9 @@ interface RunSessionDAO {
     @Delete
     suspend fun deleteRunSession(runSession: RunSession)
 
+    @Query("DELETE FROM runsession WHERE email = :email")
+    suspend fun deleteAllRuns(email: String)
+
     @Query("UPDATE runsession SET email = :email, img = :img, runSessionTitle = :runSessionTitle, timestamp = :timestamp, avgSpeedInKMH = :avgSpeedInKMH, distanceInMeters = :distanceInMeters, timeInMilis = :timeInMilis, caloriesBurnt = :caloriesBurnt, stepsPerSession = :stepsPerSession WHERE id = :id")
     suspend fun updateRunSession(email: String, img: Bitmap, runSessionTitle: String, timestamp: Long, avgSpeedInKMH: Float, distanceInMeters: Int, timeInMilis: Long, caloriesBurnt: Int, stepsPerSession: Int, id: Int)
 
