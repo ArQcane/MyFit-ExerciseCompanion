@@ -1,4 +1,4 @@
-package com.example.calorietracker.adapter
+package com.example.myfit_exercisecompanion.adapters.foodAdapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,21 +1,23 @@
-package com.example.myfit_exercisecompanion.ui.fragments
+package com.example.myfit_exercisecompanion.ui.fragments.calorieCalculator
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentCreateFoodBinding
 import com.example.myfit_exercisecompanion.models.FoodItem
-import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
-import com.example.myfit_exercisecompanion.ui.viewModels.FoodListViewModel
+import com.example.myfit_exercisecompanion.ui.fragments.home.HomeFragmentDirections
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.SearchViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,7 +47,7 @@ class CreateFoodFragment : Fragment(R.layout.fragment_create_food) {
         binding.apply {
             btnCreate.setOnClickListener { createFood() }
             btnCancel.setOnClickListener {
-                
+                findNavController().navigateUp()
             }
         }
     }
@@ -75,6 +77,17 @@ class CreateFoodFragment : Fragment(R.layout.fragment_create_food) {
             )
             // Add to room
             viewModel.addFood(newFoodItem)
+            findNavController().navigateUp()
+        }
+        else{
+            Snackbar.make(
+                binding.root,
+                "A field is missing",
+                Snackbar.LENGTH_SHORT
+            ).apply {
+                setAction("OKAY") { dismiss() }
+                show()
+            }
         }
     }
 

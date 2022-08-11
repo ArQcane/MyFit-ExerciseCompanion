@@ -1,9 +1,8 @@
-package com.example.myfit_exercisecompanion.ui.fragments
+package com.example.myfit_exercisecompanion.ui.fragments.runTracker
 
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -12,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentUpdateRunSessionBinding
 import com.example.myfit_exercisecompanion.models.User
 import com.example.myfit_exercisecompanion.other.TrackingUtility

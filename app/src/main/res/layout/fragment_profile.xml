@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:fillViewport="false"
     android:orientation="vertical"
-    tools:context=".ui.fragments.ProfileFragment">
+    tools:context=".ui.fragments.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

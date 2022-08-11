@@ -1,4 +1,4 @@
-package com.example.myfit_exercisecompanion.ui.activities
+package com.example.myfit_exercisecompanion.ui.activities.authScreens
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

@@ -1,22 +1,18 @@
-package com.example.myfit_exercisecompanion.ui.fragments
+package com.example.myfit_exercisecompanion.ui.fragments.calorieCalculator
 
 import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.calorietracker.adapter.FoodListAdapter
+import com.example.myfit_exercisecompanion.adapters.foodAdapters.FoodListAdapter
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentCalorieCounterBinding
-import com.example.myfit_exercisecompanion.databinding.FragmentHomeBinding
 import com.example.myfit_exercisecompanion.models.FoodItem
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.FoodListViewModel
-import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_calorie_counter.*
 
 @AndroidEntryPoint
 class CalorieCounterFragment : Fragment() {

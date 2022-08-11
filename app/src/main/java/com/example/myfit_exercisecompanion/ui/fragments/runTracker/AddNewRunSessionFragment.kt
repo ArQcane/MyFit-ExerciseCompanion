@@ -1,4 +1,4 @@
-package com.example.myfit_exercisecompanion.ui.fragments
+package com.example.myfit_exercisecompanion.ui.fragments.runTracker
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -18,7 +18,7 @@ import com.example.myfit_exercisecompanion.models.User
 import com.example.myfit_exercisecompanion.other.Constants.ACTION_STOP_SERVICE
 import com.example.myfit_exercisecompanion.other.TrackingUtility
 import com.example.myfit_exercisecompanion.services.TrackingService
-import com.example.myfit_exercisecompanion.ui.activities.DetailsActivity
+import com.example.myfit_exercisecompanion.ui.activities.authScreens.DetailsActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.google.android.material.snackbar.Snackbar

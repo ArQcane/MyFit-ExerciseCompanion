@@ -1,4 +1,4 @@
-package com.example.myfit_exercisecompanion.ui.fragments
+package com.example.myfit_exercisecompanion.ui.fragments.calorieCalculator
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentFoodSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,6 +47,10 @@ class FoodSettingsFragment : Fragment() {
             etCarbs.setText(carbsGoal.toString())
             etFats.setText(fatGoal.toString())
             btnSave.setOnClickListener { saveSettings(sharedPref) }
+            btnCancel.setOnClickListener {
+                val action = FoodSettingsFragmentDirections.actionFoodSettingsFragmentToCalorieCounterFragment()
+                findNavController().navigate(action)
+            }
         }
 
     }
@@ -65,5 +70,7 @@ class FoodSettingsFragment : Fragment() {
             putInt(getString(R.string.saved_fat_goal_key), fatGoal.toInt())
             apply()
         }
+        val action = FoodSettingsFragmentDirections.actionFoodSettingsFragmentToCalorieCounterFragment()
+        findNavController().navigate(action)
     }
 }

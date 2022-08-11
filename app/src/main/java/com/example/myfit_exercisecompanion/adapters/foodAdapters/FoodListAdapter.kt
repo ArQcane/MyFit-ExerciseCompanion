@@ -1,18 +1,13 @@
-package com.example.calorietracker.adapter
+package com.example.myfit_exercisecompanion.adapters.foodAdapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfit_exercisecompanion.databinding.ItemFoodBinding
 import com.example.myfit_exercisecompanion.models.FoodItem
 import com.example.myfit_exercisecompanion.ui.viewModels.FoodListViewModel
-import kotlinx.android.synthetic.main.item_food.view.*
 
 class FoodListAdapter(private val viewModel: FoodListViewModel, private val onItemclicked: (FoodItem) -> Unit) :
     ListAdapter<FoodItem, FoodListAdapter.FoodListViewHolder>(DiffCallback){

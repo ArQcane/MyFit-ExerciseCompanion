@@ -1,5 +1,6 @@
-package com.example.myfit_exercisecompanion.ui.fragments
+package com.example.myfit_exercisecompanion.ui.fragments.calorieCalculator
 
+import android.app.ProgressDialog.show
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -7,8 +8,8 @@ import android.text.TextWatcher
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.core.net.toUri
+import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,12 +17,13 @@ import coil.load
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentFoodDetailBinding
 import com.example.myfit_exercisecompanion.models.FoodItem
-import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.SearchViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_food_detail.*
+import java.lang.Exception
 
 @AndroidEntryPoint
 class FoodDetailFragment : Fragment() {
@@ -66,23 +68,39 @@ class FoodDetailFragment : Fragment() {
             tvCalorie.text = currentFood.calories
             tvCalculator.text = this@FoodDetailFragment.getString(R.string.calorie_calc, currentFood.serving_qty, currentFood.serving_unit, cal_per_unit.toString())
             btnAddBreakfast.setOnClickListener {
-                // Create new food entry
-                val newFoodEntry = FoodItem(
-                    id =currentFood.id,
-                    email = email,
-                    food_name = currentFood.food_name,
-                    serving_qty = etQuantity.text.toString(),
-                    serving_unit = currentFood.serving_unit,
-                    calories = (etQuantity.text.toString().toFloat() * (currentFood.calories.toInt().div(currentFood.serving_qty.toInt()))).toInt().toString(),
-                    photo = currentFood.photo,
-                    category = currentFood.category,
-                    protein = (etQuantity.text.toString().toFloat() * (currentFood.protein.toInt().div(currentFood.serving_qty.toInt()))).toInt().toString(),
-                    carbs = (etQuantity.text.toString().toFloat() * (currentFood.carbs.toInt().div(currentFood.serving_qty.toInt()))).toInt().toString(),
-                    fat = (etQuantity.text.toString().toFloat() * (currentFood.fat.toInt().div(currentFood.serving_qty.toInt()))).toInt().toString()
-                )
-                // Add food to room database
-                addFood(newFoodEntry)
+                try {
+                    // Create new food entry
+                    val newFoodEntry = FoodItem(
+                        id =currentFood.id,
+                        email = email,
+                        food_name = currentFood.food_name,
+                        serving_qty = etQuantity.text.toString(),
+                        serving_unit = currentFood.serving_unit,
+                        calories = (etQuantity.text.toString().toFloat() * (currentFood.calories.toInt().div(currentFood.serving_qty.toInt()))).toInt().toString(),
+                        photo = currentFood.photo,
+                        category = currentFood.category,
+                        protein = (etQuantity.text.toString().toFloat() * (currentFood.protein.toInt().div(currentFood.serving_qty.toInt()))).toInt().toString(),
+                        carbs = (etQuantity.text.toString().toFloat() * (currentFood.carbs.toInt().div(currentFood.serving_qty.toInt()))).toInt().toString(),
+                        fat = (etQuantity.text.toString().toFloat() * (currentFood.fat.toInt().div(currentFood.serving_qty.toInt()))).toInt().toString()
+                    )
+                    // Add food to room database
+                    addFood(newFoodEntry)
+                    findNavController().navigateUp()
+                }
+                catch(e: Exception){
+                    Snackbar.make(
+                        binding.root,
+                        "Please input a quantity for the food item",
+                        Snackbar.LENGTH_SHORT
+                    ).apply {
+                        setAction("OKAY") { dismiss() }
+                        show()
+                    }
+                }
+
+
             }
+            btnCancel.setOnClickListener { onBackPressed() }
         }
 
         binding.etQuantity.addTextChangedListener(object : TextWatcher {
@@ -158,7 +176,7 @@ class FoodDetailFragment : Fragment() {
     /**
      * Navigate back to home page
      */
-    fun cancelPasswordCreation() {
+    private fun onBackPressed() {
         findNavController().navigate(R.id.action_foodDetailFragment_to_calorieCounterFragment)
     }
 }

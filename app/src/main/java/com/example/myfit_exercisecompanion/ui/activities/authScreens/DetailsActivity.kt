@@ -1,19 +1,15 @@
-package com.example.myfit_exercisecompanion.ui.activities
+package com.example.myfit_exercisecompanion.ui.activities.authScreens
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.viewModels
 import com.example.myfit_exercisecompanion.databinding.ActivityDetailsBinding
 import com.example.myfit_exercisecompanion.models.User
-import com.example.myfit_exercisecompanion.other.Constants
 import com.example.myfit_exercisecompanion.other.Constants.REQUEST_CODE_CHOOSE_PROFILE_PICTURE
 import com.example.myfit_exercisecompanion.ui.MainActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel

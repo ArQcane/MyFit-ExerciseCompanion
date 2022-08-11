@@ -1,4 +1,4 @@
-package com.example.myfit_exercisecompanion.ui.fragments
+package com.example.myfit_exercisecompanion.ui.fragments.runTracker
 
 import android.app.Dialog
 import android.os.Bundle

@@ -1,7 +1,6 @@
-package com.example.myfit_exercisecompanion.ui.fragments
+package com.example.myfit_exercisecompanion.ui.fragments.home
 
 import android.Manifest
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfit_exercisecompanion.R
-import com.example.myfit_exercisecompanion.adapters.RunSessionAdapter
+import com.example.myfit_exercisecompanion.adapters.runAdapters.RunSessionAdapter
 import com.example.myfit_exercisecompanion.databinding.FragmentRunsListBinding
 import com.example.myfit_exercisecompanion.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.example.myfit_exercisecompanion.other.SortTypes

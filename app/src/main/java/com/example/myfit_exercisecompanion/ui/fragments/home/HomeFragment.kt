@@ -1,11 +1,9 @@
-package com.example.myfit_exercisecompanion.ui.fragments
+package com.example.myfit_exercisecompanion.ui.fragments.home
 
 import android.Manifest
-import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -16,7 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfit_exercisecompanion.R
-import com.example.myfit_exercisecompanion.adapters.HomeRunAdapter
+import com.example.myfit_exercisecompanion.adapters.runAdapters.HomeRunAdapter
 import com.example.myfit_exercisecompanion.databinding.FragmentHomeBinding
 import com.example.myfit_exercisecompanion.models.User
 import com.example.myfit_exercisecompanion.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
@@ -133,7 +131,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EasyPermissions.Permissio
             }
             else{
                 binding.rvRuns.visibility = View.INVISIBLE
-                binding.ivEmpty.visibility = View.VISIBLE
+                binding.tvEmpty.visibility = View.VISIBLE
                 binding.ivEmpty.visibility = View.VISIBLE
             }
         })

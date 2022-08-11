@@ -7,8 +7,8 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.calorietracker.adapter.FoodListAdapter
-import com.example.calorietracker.adapter.FoodSearchListAdapter
+import com.example.myfit_exercisecompanion.adapters.foodAdapters.FoodListAdapter
+import com.example.myfit_exercisecompanion.adapters.foodAdapters.FoodSearchListAdapter
 
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.models.Food

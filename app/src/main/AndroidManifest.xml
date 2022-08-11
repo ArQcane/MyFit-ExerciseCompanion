@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyFitExerciseCompanion" >
         <activity
-            android:name=".ui.activities.SplashScreenActivity"
+            android:name=".ui.activities.authScreens.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,21 +32,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.DetailsActivity"
+            android:name=".ui.activities.authScreens.DetailsActivity"
             android:exported="false" />
         <activity android:name=".ui.activities.ChatActivity"
             android:exported="false"
             android:parentActivityName=".ui.MainActivity"/>
         <activity
-            android:name=".ui.activities.ForgetPasswordActivity"
+            android:name=".ui.activities.authScreens.ForgetPasswordActivity"
             android:exported="false"
-            android:parentActivityName=".ui.activities.LoginActivity" />
+            android:parentActivityName=".ui.activities.authScreens.LoginActivity" />
         <activity
-            android:name=".ui.activities.RegisterActivity"
+            android:name=".ui.activities.authScreens.RegisterActivity"
             android:exported="true"
-            android:parentActivityName=".ui.activities.LoginActivity" />
+            android:parentActivityName=".ui.activities.authScreens.LoginActivity" />
         <activity
-            android:name=".ui.activities.LoginActivity"
+            android:name=".ui.activities.authScreens.LoginActivity"
             android:exported="true" >
         </activity>
         <activity

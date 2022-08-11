@@ -1,19 +1,17 @@
-package com.example.myfit_exercisecompanion.ui.fragments
+package com.example.myfit_exercisecompanion.ui.fragments.calorieCalculator
 
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.SearchView
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.calorietracker.adapter.FoodSearchListAdapter
+import com.example.myfit_exercisecompanion.adapters.foodAdapters.FoodSearchListAdapter
 import com.example.myfit_exercisecompanion.R
 import com.example.myfit_exercisecompanion.databinding.FragmentSearchFoodBinding
 import com.example.myfit_exercisecompanion.models.FoodItem
-import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.RunSessionViewModel
 import com.example.myfit_exercisecompanion.ui.viewModels.SearchViewModel
 import com.example.myfit_exercisecompanion.utility.convertToFoodItem
@@ -101,7 +99,6 @@ class SearchFoodFragment : Fragment() {
                 foodCategory = currentCategory
             )
         findNavController().navigate(action)
-
     }
 
     private fun goToFoodDetailFragment(item: FoodItem) {

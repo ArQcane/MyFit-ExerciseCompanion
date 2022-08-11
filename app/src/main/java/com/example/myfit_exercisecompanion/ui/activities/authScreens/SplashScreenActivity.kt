@@ -1,11 +1,9 @@
-package com.example.myfit_exercisecompanion.ui.activities
+package com.example.myfit_exercisecompanion.ui.activities.authScreens
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.example.myfit_exercisecompanion.R
-import com.example.myfit_exercisecompanion.databinding.ActivityDetailsBinding
 import com.example.myfit_exercisecompanion.databinding.ActivitySplashScreenBinding
 import com.example.myfit_exercisecompanion.ui.MainActivity
 import com.example.myfit_exercisecompanion.ui.viewModels.AuthViewModel

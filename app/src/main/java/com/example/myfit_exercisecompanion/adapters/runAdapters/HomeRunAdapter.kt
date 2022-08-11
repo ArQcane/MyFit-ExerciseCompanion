@@ -1,4 +1,4 @@
-package com.example.myfit_exercisecompanion.adapters
+package com.example.myfit_exercisecompanion.adapters.runAdapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,18 +7,17 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.myfit_exercisecompanion.databinding.ItemRunSessionBinding
+import com.example.myfit_exercisecompanion.databinding.ItemRunSessionHomeBinding
 import com.example.myfit_exercisecompanion.models.RunSession
 import com.example.myfit_exercisecompanion.other.TrackingUtility
-import com.example.myfit_exercisecompanion.ui.fragments.HomeFragmentDirections
-import com.example.myfit_exercisecompanion.ui.fragments.RunsListFragmentDirections
+import com.example.myfit_exercisecompanion.ui.fragments.home.HomeFragmentDirections
 import kotlinx.android.synthetic.main.item_run_session.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewHolder>(){
+class HomeRunAdapter : RecyclerView.Adapter<HomeRunAdapter.HomeRunViewHolder>(){
 
-    inner class RunSessionViewHolder(val binding: ItemRunSessionBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class HomeRunViewHolder(val binding: ItemRunSessionHomeBinding) : RecyclerView.ViewHolder(binding.root){
     }
 
     val diffCallback = object : DiffUtil.ItemCallback<RunSession>() {
@@ -36,12 +35,12 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
     fun submitList(list: List<RunSession>) = differ.submitList(list)
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunSessionViewHolder {
-        val binding = ItemRunSessionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RunSessionViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeRunViewHolder {
+        val binding = ItemRunSessionHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return HomeRunViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RunSessionViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeRunViewHolder, position: Int) {
         val runSession = differ.currentList[position]
 
         with(holder){
@@ -57,22 +56,22 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
                 val avgSpeed = "Pace: ${runSession.avgSpeedInKMH}km/h"
                 binding.tvAverageSpeed.text = avgSpeed
 
-                val distanceInKm = "Distance Travelled: ${runSession.distanceInMeters / 1000f}km"
+                val distanceInKm = "Distance Ran: ${runSession.distanceInMeters / 1000f}km"
                 binding.tvDistance.text = distanceInKm
 
                 binding.tvTimeTaken.text = "Time: ${TrackingUtility.getFormattedStopWatchTime(runSession.timeInMilis)}"
 
-                val caloriesBurned = "Calories Burned: ${runSession.caloriesBurnt}kcal"
+                val caloriesBurned = "Calorie Burnt: ${runSession.caloriesBurnt}kcal"
                 binding.tvCaloriesBurned.text = caloriesBurned
 
-                val stepsTaken = "${runSession.stepsPerSession} steps"
+                val stepsTaken = "Steps Taken: ${runSession.stepsPerSession}"
                 binding.tvStepsTaken.text = stepsTaken
 
                 val title = "${runSession.runSessionTitle}"
                 binding.tvRunTitle.text = title
 
                 btnEditRun.setOnClickListener {
-                    val action = RunsListFragmentDirections.actionRunsListFragmentToUpdateRunSessionFragment(runSession)
+                    val action = HomeFragmentDirections.actionHomeFragmentToUpdateRunSessionFragment(runSession)
                     findNavController().navigate(action)
                 }
             }
@@ -80,6 +79,9 @@ class RunSessionAdapter : RecyclerView.Adapter<RunSessionAdapter.RunSessionViewH
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        if(differ.currentList.size > 0){
+            return 1
+        }
+        else return differ.currentList.size
     }
 }
